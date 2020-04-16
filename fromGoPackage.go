@@ -1,35 +1,31 @@
 package main
 
 import (
-	"os"
+	"fmt"
 	"go/ast"
 	"go/build"
-	"go/token"
 	"go/importer"
-	"go/types"
 	"go/parser"
-	"strings"
-	"log"
+	"go/token"
+	"go/types"
 	"io/ioutil"
-	"path/filepath"
+	"log"
+	"strings"
 )
 
 // walks from directory and gets all go files
 func getGoFiles(root string) ([]string, error) {
-	files := make([]string, 0)
-
-	err := filepath.Walk(root, func(path string, _ os.FileInfo, e error) error{
-		if e != nil {
-			return e
-		}
-		if !strings.HasSuffix(path, ".go") {
-			return nil
-		}
-		files = append(files, path)
-		return nil
-	})
+	pkg, err := (build.Default).ImportDir(root, 0)
 	if err != nil {
-		return nil, err 
+		return nil, err
+	}
+
+	// we want to get all normal Go Files and Cgo files out of the directory
+	files := append(pkg.GoFiles, pkg.CgoFiles...)
+
+	// and we want to append the root to eacch of these
+	for i, path := range files {
+		files[i] = fmt.Sprintf("%s/%s", root, path)
 	}
 
 	return files, nil
@@ -46,7 +42,7 @@ func getTypes(pathes []string) ([]Fragment, error) {
 			continue
 		}
 
-		// read in text of file 
+		// read in text of file
 		contents, err := ioutil.ReadFile(path)
 		if err != nil {
 			log.Println(i, path)
@@ -71,13 +67,12 @@ func getTypes(pathes []string) ([]Fragment, error) {
 
 	log.Println(pkg.Name())
 	log.Println(pkg.Scope())
-	
+
 	return nil, nil
 }
 
 // infrastructure for loading from Go package
 func main() {
-	log.Println(build.Default)
 	root := "data/go/src/archive/tar"
 	files, err := getGoFiles(root)
 	log.Println(files[0])

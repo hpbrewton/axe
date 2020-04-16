@@ -8,7 +8,7 @@ type Type interface {
 }
 
 type Named struct {
-	name string
+	name   string
 	actual Type
 }
 
@@ -16,7 +16,7 @@ type Primative struct {
 	name string
 }
 
-type Hole struct {}
+type Hole struct{}
 
 func Debug(t Type) string {
 	switch t.(type) {
