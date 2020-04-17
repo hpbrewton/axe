@@ -1,8 +1,11 @@
 package main
 
+import "go/types"
+
 type Fragment struct {
+	comment string
 	url  string
-	t    Type
+	typ  types.Type
 	line int
 	col  int
 }
