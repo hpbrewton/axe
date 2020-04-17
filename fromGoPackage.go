@@ -109,6 +109,9 @@ func getTypes(pathes []string) ([]*Fragment, error) {
 	}
 
 	// now to gather fragments... 
+	conv := &GoToAxeConverter {
+		Named: make(map[*types.TypeName]Type),
+	}
 	fragments := make([]*Fragment, len(pkgScope.Names()))
 	for i, name := range pkgScope.Names() {
 		var fragment Fragment
@@ -124,7 +127,7 @@ func getTypes(pathes []string) ([]*Fragment, error) {
 		fragment.url = fmt.Sprintf("%v/%v", pkg.Name(), object.Name())
 
 		// getting type
-		fragment.typ = object.Type()
+		fragment.typ = conv.GoTypeToAxeType(object.Type())
 
 		// TODO get position // Or maybe not, just give name
 
@@ -132,109 +135,6 @@ func getTypes(pathes []string) ([]*Fragment, error) {
 	}
 
 	return fragments, nil
-}
-
-func GoVarToType(va *types.Var) Type {
-	return GoTypeToAxeType(va.Type())
-}
-
-func GoPointerToAxeKind(ptr *types.Pointer) *Kind {
-	underType := GoTypeToAxeType(ptr.Elem())
-	return &Kind {
-		name: "*",
-		arguments: []Type{underType},
-	}
-}
-
-func GoTupleToSliceOfAxeTypes(tup *types.Tuple) []Type {
-	lentup := tup.Len()
-	sliceTypes := make([]Type, lentup)
-	for i := 0; i < lentup; i++ {
-		va := tup.At(i)
-		sliceTypes[i] = GoVarToType(va)
-	}
-	return sliceTypes
-}
-
-func GoBasicToAxePrimative(basic *types.Basic) *Primative {
-	return &Primative{basic.Name()}
-}
-
-func GoSignatureToAxeFunction(sig *types.Signature) *Function {
-	return &Function {
-		arguments: GoTupleToSliceOfAxeTypes(sig.Params()),
-		output: GoTupleToSliceOfAxeTypes(sig.Results()),
-	}
-}
-
-func GoArrayToAxeArray(array *types.Array) *Array {
-	underlying := GoTypeToAxeType(array.Elem())
-	return &Array {
-		size: int(array.Len()),
-		typ: underlying,
-	}
-}
-
-func GoSliceToAxeKind(slice *types.Slice) *Kind {
-	underlying := GoTypeToAxeType(slice.Elem())
-	return &Kind{
-		name: "slice",
-		arguments: []Type{underlying},
-	}
-}
-
-func GoMapToAxeKind(mp *types.Map) *Kind {
-	from := GoTypeToAxeType(mp.Key())
-	to := GoTypeToAxeType(mp.Elem())
-	return &Kind {
-		name: "map",
-		arguments: []Type{from, to},
-	}
-}
-
-func GoChanToAxeKind(ch *types.Chan) *Kind {
-	underlying := GoTypeToAxeType(ch.Elem())
-	return &Kind {
-		name: "chan",
-		arguments: []Type{underlying},
-	}
-}
-
-func GoStructToAxeStruct(strct *types.Struct) *Struct {
-	nfields := strct.NumFields()
-	fieldNames := make([]string, nfields)
-	fields := make([]Type, nfields)
-	for i := 0; i < nfields; i++ {
-		va := strct.Field(i)
-		fieldNames[i] = va.Name()
-		fields[i] = GoVarToType(va)
-	}
-	return &Struct {
-		fieldNames: fieldNames,
-		fields: fields,
-	}
-}
-
-// func GoNamedtoAxeName(named *types.Named) Named {
-	
-// }
-
-// converts go types to actual types
-func GoTypeToAxeType(gType types.Type) Type {
-	// this switch is spelled out here, in the Types section:
-	// https://github.com/golang/example/tree/master/gotypes
-	switch gType.(type) {
-	case *types.Basic: return GoBasicToAxePrimative(gType.(*types.Basic))
-	case *types.Pointer: return GoPointerToAxeKind(gType.(*types.Pointer))
-	case *types.Array: return GoArrayToAxeArray(gType.(*types.Array))
-	case *types.Slice: return GoSliceToAxeKind(gType.(*types.Slice))
-	case *types.Map: return GoMapToAxeKind(gType.(*types.Map))
-	case *types.Chan: return GoChanToAxeKind(gType.(*types.Chan))
-	case *types.Struct: return GoStructToAxeStruct(gType.(*types.Struct))
-	case *types.Signature: return GoSignatureToAxeFunction(gType.(*types.Signature))
-	// case *types.Named: return GoNamedtoAxeName(gType.(*types.Named))
-	default: return &Hole{}
-	}
 }
 
 // infrastructure for loading from Go package
@@ -252,6 +152,16 @@ func main() {
 	}
 
 	for _, fragment := range fragments {
-		log.Println(fragment.url, GoTypeToAxeType(fragment.typ).String())
+		log.Println(fragment.url, fragment.typ)
+		switch fragment.typ.(type) {
+		case *MethodHaver:
+			for name, method := range fragment.typ.(*MethodHaver).methods {
+				log.Println("\t", name, method.String())
+			}
+		case *Interface:
+			for name, method := range fragment.typ.(*Interface).methods {
+				log.Println("\t", name, method.String())
+			}
+		}
 	}
 }

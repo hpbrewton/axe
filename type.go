@@ -10,13 +10,24 @@ type Type interface {
 	fmt.Stringer
 }
 
-type Named struct {
-	name   string
-	actual Type
+type Interface struct {
+	name string
+	implements []Type
+	methods map[string]*Function
 }
 
-func (named *Named) String() string {
-	return named.name
+func (ntrf *Interface) String() string {
+	return fmt.Sprintf("%s", ntrf.name)
+}
+
+type MethodHaver struct {
+	name string
+	self Type
+	methods map[string]*Function
+}
+
+func (mh *MethodHaver) String() string {
+	return mh.name
 }
 
 type Primative struct {
@@ -82,15 +93,3 @@ func (*Hole) String() string {
 	return "??"
 }
 
-func Debug(t Type) string {
-	switch t.(type) {
-	case *Named:
-		named := t.(*Named)
-		return fmt.Sprintf("%s := %s", named.name, Debug(named.actual))
-	case *Primative:
-		primative := t.(*Primative)
-		return fmt.Sprintf("%s", primative.name)
-	default:
-		panic(fmt.Sprintf("%T is not a supported type", t))
-	}
-}
