@@ -4,7 +4,6 @@ import (
 	"math"
 	"reflect"
 	"strings"
-	"log"
 )
 
 const (
@@ -34,6 +33,7 @@ var DefaultDistanceConfig = &DistanceConfig {
 	differentInterfaceName: 0.2,
 	differentImplements: 5,
 	differentMethodsInterface: 5,
+	addVar: 0.2,
 }
 
 type DistanceConfig struct {
@@ -57,6 +57,7 @@ type DistanceConfig struct {
 	differentInterfaceName float64
 	differentMethodsInterface float64
 	differentImplements float64
+	addVar float64
 }
 
 func (dc *DistanceConfig) DistancePrimative(l, r *Primative) float64 {
@@ -67,47 +68,21 @@ func (dc *DistanceConfig) DistancePrimative(l, r *Primative) float64 {
 	}
 }
 
-// This can be made good with more care TODO
 func (dc *DistanceConfig) DistanceTuple(l, r []Type) (score float64) {
-	// okay, types should be sorted TODO
-	if len(l) == 0 && len(r) > 0 || len(l) > 0 && len(r) == 0 {
-		score = dc.tupleFromNothing
-		return 
-	}
-
-	table := make([][]float64, len(l))
-	for i, _ := range table {
-		table[i] = make([]float64, len(r))
-	}
-
-	for i := 0; i < len(l); i++ {
-		for j := 0; j < len(r); j++ {
-			table[i][j] = dc.Distance(l[i], r[j])
+	s := make([][]float64, len(l)+1)
+	for i, _ := range s {
+		s[i] = make([]float64, len(r)+1)
+		for j, _ := range s[i] {
+			s[i][j] = -1
 		}
 	}
-	log.Println(table)
-
-	ndiag := len(l)
-	if len(r) > ndiag {
-		ndiag = len(r)
+	tl := &TypeLevenshteiner {
+		l: l,
+		r: r,
+		s: s,
+		dc: dc,
 	}
-
-	lpos := 0 
-	rpos := 0
-	for {
-		score += table[lpos][rpos]
-		if lpos + 1 < len(l) {
-			lpos++
-		}
-		if rpos + 1 < len(r) {
-			rpos++
-		}
-		if lpos + 1 >= len(l) && rpos + 1 >= len(r) {
-			break
-		}
-	}
-	log.Println(score)
-
+	score = Levenshtein(tl, len(l), len(r))
 	return
 }
 
