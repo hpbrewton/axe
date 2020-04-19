@@ -5,6 +5,7 @@ import (
 	"strings"
 	"strconv"
 	"reflect"
+	"sort"
 )
 
 type Type interface {
@@ -25,6 +26,22 @@ type MethodHaver struct {
 	name string
 	self Type
 	methods map[string]*Function
+}
+
+func (mh *MethodHaver) SortedMethods() []Type {
+	methodNames := make([]string, len(mh.methods))
+	methods := make([]interface{}, len(mh.methods))
+	i := 0
+	for name, method := range mh.methods {
+		methodNames[i] = name 
+		methods[i] = interface{}(method)
+	}
+	SortBy(sort.StringSlice(methodNames), methods)
+	actualMethods := make([]Type, len(mh.methods))
+	for i, intfMethod := range methods {
+		actualMethods[i] = intfMethod.(Type)
+	}
+	return actualMethods
 }
 
 func (mh *MethodHaver) String() string {
@@ -102,18 +119,19 @@ func (*Hole) String() string {
 	return "??"
 }
 
+func IsHole(t Type) bool {
+	switch t.(type) {
+	case *Hole: return true
+	default: return false
+	}
+}
+
 // it is useful to have a canonical ordering of types
 // so here it is!
 func Ord(a Type,  b Type) int {
 	atyp := reflect.TypeOf(a)
 	btyp := reflect.TypeOf(b)
 
-	if atyp.Name() == btyp.Name() {
-		return 0
-	} else if atyp.Name() < btyp.Name() {
-		return 1 
-	} else {
-		return -1
-	}
+	return strings.Compare(atyp.String(), btyp.String())
 }
 

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
+	"os"
 	"go/ast"
 	"go/build"
 	"go/importer"
@@ -9,6 +11,7 @@ import (
 	"go/token"
 	"go/types"
 	"io/ioutil"
+	"sort"
 	"log"
 	"strings"
 )
@@ -59,7 +62,7 @@ func addDeclsFromFile(commentMap map[token.Pos]*ast.CommentGroup, parsedFile *as
 }
 
 // takes files and returns a list of pathes
-func getTypes(pathes []string) ([]*Fragment, error) {
+func getTypes(pathes []string) ([]*GoFragment, error) {
 	fset := token.NewFileSet()
 
 	astFiles := make([]*ast.File, len(pathes))
@@ -96,25 +99,15 @@ func getTypes(pathes []string) ([]*Fragment, error) {
 		log.Fatal(err)
 	}
 
-	log.Println(pkg.Name())
 	pkgScope := pkg.Scope()
-	for _, name := range pkgScope.Names() {
-		object := pkgScope.Lookup(name)
-		comments, ok := commentMap[object.Pos()] 
-		if !ok {
-			log.Println(object)
-		} else {
-			log.Println(comments)
-		}
-	}
 
 	// now to gather fragments... 
 	conv := &GoToAxeConverter {
 		Named: make(map[*types.TypeName]Type),
 	}
-	fragments := make([]*Fragment, len(pkgScope.Names()))
+	fragments := make([]*GoFragment, len(pkgScope.Names()))
 	for i, name := range pkgScope.Names() {
-		var fragment Fragment
+		var fragment GoFragment
 		object := pkgScope.Lookup(name)
 
 		// getting comments
@@ -122,6 +115,8 @@ func getTypes(pathes []string) ([]*Fragment, error) {
 		if ok {
 			fragment.comment = commentGroup.Text()
 		}
+
+		fragment.pkg = pkg
 
 		// getting file location
 		fragment.url = fmt.Sprintf("%v/%v", pkg.Name(), object.Name())
@@ -138,21 +133,81 @@ func getTypes(pathes []string) ([]*Fragment, error) {
 }
 
 // infrastructure for loading from Go package
+func GoFragmentsFromDirectory(root string) ([]*GoFragment, error) {
+	fragments := make([]*GoFragment, 0)
+
+	err := filepath.Walk(root, func (path string, info os.FileInfo, err error) error {
+		if !info.IsDir() {
+			return nil
+		}
+
+		// for now,
+		// let's ignore these directoreis they do wierd things where they call to C
+		// notice /net and /os are in here. Yikes! this needs to change TODO
+		if strings.HasPrefix(path, "data/go/src/builtin") ||
+		strings.HasPrefix(path, "data/go/src/bytes") ||
+		strings.HasPrefix(path, "data/go/src/cmd") || 
+		strings.HasPrefix(path, "data/go/src/crypto/ecdsa") ||
+		strings.HasPrefix(path, "data/go/src/crypto/tls") ||
+		strings.HasPrefix(path, "data/go/src/crypto/x509") || 
+		strings.HasPrefix(path, "data/go/src/database/sql") || 
+		strings.HasPrefix(path, "data/go/src/debug") || 
+		strings.HasPrefix(path, "data/go/src/go/build") || 
+		strings.HasPrefix(path, "data/go/src/go/internal") ||
+		strings.HasPrefix(path, "data/go/src/net") ||
+		strings.HasPrefix(path, "data/go/src/os") ||
+		strings.HasPrefix(path, "data/go/src/plugin") ||
+		strings.HasPrefix(path, "data/go/src/runtime") ||
+		strings.HasPrefix(path, "data/go/src/strings") ||
+		strings.HasPrefix(path, "data/go/src/vendor") ||
+		strings.Contains(path, "testdata") {
+			return nil
+		}
+
+		files, err := getGoFiles(path)
+		if err != nil {
+			return nil //not a go directory, no worry
+		}
+		frags, err := getTypes(files)
+		if err != nil {
+			return err 
+		}
+		fragments = append(fragments, frags...)
+		log.Println(path)
+		// log.Println(fragments)
+		return nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	return fragments, nil
+}
+
 func main() {
-	root := "data/go/src/archive/tar"
-	files, err := getGoFiles(root)
-
+	// fragments, err := GoFragmentsFromDirectory("data/go/src/archive/tar")
+	fragments, err := GoFragmentsFromDirectory("data/go/src")
 	if err != nil {
-		log.Fatal("here,", err)
+		log.Fatal(err)
 	}
 
-	fragments, err := getTypes(files)
-	if err != nil {
-		log.Println(err)
+	scores := make([]float64, len(fragments))
+	ftyp := &Primative{
+		name: "float64",
 	}
+	query := &Function{
+		object: nil,
+		arguments: []Type{ftyp, ftyp},
+		output: []Type{ftyp},
+	}
+	for i, fragment := range fragments {
+		scores[i] = DistanceFragment(fragment, query)
+	}
+	sort.Sort(sort.Reverse(&FragmentStoreWithScore{fragments: fragments, scores: scores}))
 
-	for _, fragment := range fragments {
-		log.Println(fragment.url, fragment.typ)
+	for i, fragment := range fragments {
+		log.Println(scores[i], fragment.url, fragment.typ)
 		switch fragment.typ.(type) {
 		case *MethodHaver:
 			for name, method := range fragment.typ.(*MethodHaver).methods {
