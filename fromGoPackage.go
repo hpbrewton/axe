@@ -193,13 +193,10 @@ func main() {
 	}
 
 	scores := make([]float64, len(fragments))
-	ftyp := &Primative{
-		name: "float64",
-	}
 	query := &Function{
 		object: nil,
-		arguments: []Type{ftyp, ftyp},
-		output: []Type{ftyp},
+		arguments: []Type{&Primative{name: "bool"}},
+		output: []Type{&Primative{name: "int"}},
 	}
 	for i, fragment := range fragments {
 		scores[i] = DistanceFragment(fragment, query)
@@ -219,4 +216,13 @@ func main() {
 			}
 		}
 	}
+
+	aArray := &Array {
+		size: -1,
+		typ: &Primative{name: "string"},
+	}
+	aTuple := []Type{aArray}
+	bTuple := []Type{&Primative{name: "string"}}
+
+	log.Println(DefaultDistanceConfig.DistanceTuple(aTuple, bTuple))
 }

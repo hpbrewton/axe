@@ -4,6 +4,7 @@ import (
 	"math"
 	"reflect"
 	"strings"
+	"log"
 )
 
 const (
@@ -30,6 +31,9 @@ var DefaultDistanceConfig = &DistanceConfig {
 	differentObjectName: 0.1,
 	differentMethods: 0.9,
 	differtObject: 0.2,
+	differentInterfaceName: 0.2,
+	differentImplements: 5,
+	differentMethodsInterface: 5,
 }
 
 type DistanceConfig struct {
@@ -50,6 +54,9 @@ type DistanceConfig struct {
 	differentObjectName float64
 	differentMethods float64
 	differtObject float64
+	differentInterfaceName float64
+	differentMethodsInterface float64
+	differentImplements float64
 }
 
 func (dc *DistanceConfig) DistancePrimative(l, r *Primative) float64 {
@@ -78,6 +85,7 @@ func (dc *DistanceConfig) DistanceTuple(l, r []Type) (score float64) {
 			table[i][j] = dc.Distance(l[i], r[j])
 		}
 	}
+	log.Println(table)
 
 	ndiag := len(l)
 	if len(r) > ndiag {
@@ -86,7 +94,7 @@ func (dc *DistanceConfig) DistanceTuple(l, r []Type) (score float64) {
 
 	lpos := 0 
 	rpos := 0
-	for lpos + 1 < ndiag && rpos + 1 < ndiag {
+	for {
 		score += table[lpos][rpos]
 		if lpos + 1 < len(l) {
 			lpos++
@@ -94,9 +102,26 @@ func (dc *DistanceConfig) DistanceTuple(l, r []Type) (score float64) {
 		if rpos + 1 < len(r) {
 			rpos++
 		}
+		if lpos + 1 >= len(l) && rpos + 1 >= len(r) {
+			break
+		}
 	}
+	log.Println(score)
 
 	return
+}
+
+func (dc *DistanceConfig) DistanceInterface(l, r *Interface) (score float64) {
+	if l.name != r.name {
+		score += dc.differentInterfaceName
+	}
+
+	leftMethods := SortedMethods(l.methods)
+	rightMethods := SortedMethods(r.methods)
+	score += dc.differentMethodsInterface*dc.DistanceTuple(leftMethods, rightMethods)
+
+	score += dc.differentImplements*dc.DistanceTuple(l.implements, r.implements)
+	return 
 }
 
 func (dc *DistanceConfig) DistanceMethodHaver(l, r *MethodHaver) (score float64) {
@@ -105,8 +130,8 @@ func (dc *DistanceConfig) DistanceMethodHaver(l, r *MethodHaver) (score float64)
 	}
 
 	score += dc.differtObject*dc.Distance(l.self, r.self) 
-	leftMethods := l.SortedMethods()
-	rightMethods := r.SortedMethods()
+	leftMethods := SortedMethods(l.methods)
+	rightMethods := SortedMethods(r.methods)
 	score += dc.differentMethods*dc.DistanceTuple(leftMethods, rightMethods)
 
 	return
@@ -170,7 +195,12 @@ func (dc *DistanceConfig) Distance(l Type, r Type) float64 {
 
 	switch l.(type) {
 	case *Primative: return dc.DistancePrimative(l.(*Primative), r.(*Primative))
+	case *Interface: return dc.DistanceInterface(l.(*Interface), r.(*Interface))
+	case *MethodHaver: return dc.DistanceMethodHaver(l.(*MethodHaver), r.(*MethodHaver))
+	case *Kind: return dc.DistanceKind(l.(*Kind), r.(*Kind))
+	case *Array: return dc.DistanceArray(l.(*Array), r.(*Array))
 	case *Function: return dc.DistanceFunction(l.(*Function), r.(*Function))
+	case *Struct: return dc.DistanceStruct(l.(*Struct), r.(*Struct))
 	default:
 		return Unknown
 	}

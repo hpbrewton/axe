@@ -28,16 +28,16 @@ type MethodHaver struct {
 	methods map[string]*Function
 }
 
-func (mh *MethodHaver) SortedMethods() []Type {
-	methodNames := make([]string, len(mh.methods))
-	methods := make([]interface{}, len(mh.methods))
+func SortedMethods(methodMap map[string]*Function) []Type {
+	methodNames := make([]string, len(methodMap))
+	methods := make([]interface{}, len(methodMap))
 	i := 0
-	for name, method := range mh.methods {
+	for name, method := range methodMap {
 		methodNames[i] = name 
 		methods[i] = interface{}(method)
 	}
 	SortBy(sort.StringSlice(methodNames), methods)
-	actualMethods := make([]Type, len(mh.methods))
+	actualMethods := make([]Type, len(methodMap))
 	for i, intfMethod := range methods {
 		actualMethods[i] = intfMethod.(Type)
 	}
