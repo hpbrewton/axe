@@ -1,7 +1,7 @@
 package main 
 
 import (
-	// "log"
+	"log"
 	"go/types"
 )
 
@@ -10,6 +10,7 @@ type GoToAxeConverter struct {
 }
 
 func (conv *GoToAxeConverter) GoVarToType(va *types.Var) Type {
+	log.Println(va)
 	return conv.GoTypeToAxeType(va.Type())
 }
 
@@ -36,7 +37,15 @@ func (conv *GoToAxeConverter) GoBasicToAxePrimative(basic *types.Basic) *Primati
 }
 
 func (conv *GoToAxeConverter) GoSignatureToAxeFunction(sig *types.Signature) *Function {
+	var typ Type
+	recv := sig.Recv()
+	if recv == nil {
+		typ = nil
+	} else {
+		typ = conv.GoVarToType(recv)
+	}
 	return &Function {
+		object: typ,
 		arguments: conv.GoTupleToSliceOfAxeTypes(sig.Params()),
 		output: conv.GoTupleToSliceOfAxeTypes(sig.Results()),
 	}

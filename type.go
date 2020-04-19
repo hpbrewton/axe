@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"strconv"
+	"reflect"
 )
 
 type Type interface {
@@ -64,12 +65,20 @@ func (array *Array) String() string {
 }
 
 type Function struct {
+	object Type // hey bud, it's worth noting that this can be nil
 	arguments []Type
 	output []Type
 }
 
 func (function *Function) String() string {
-	return fmt.Sprintf("%v -> %v", function.arguments, function.output)
+	var str string
+	if function.object == nil {
+		str = ""
+	} else {
+		str = function.object.String()
+		str = fmt.Sprintf("%s -> ", str)
+	}
+	return fmt.Sprintf("%s%v -> %v", str, function.arguments, function.output)
 }
 
 type Struct struct {
@@ -91,5 +100,20 @@ type Hole struct{}
 
 func (*Hole) String() string {
 	return "??"
+}
+
+// it is useful to have a canonical ordering of types
+// so here it is!
+func Ord(a Type,  b Type) int {
+	atyp := reflect.TypeOf(a)
+	btyp := reflect.TypeOf(b)
+
+	if atyp.Name() == btyp.Name() {
+		return 0
+	} else if atyp.Name() < btyp.Name() {
+		return 1 
+	} else {
+		return -1
+	}
 }
 
