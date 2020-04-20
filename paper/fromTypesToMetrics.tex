@@ -1,0 +1,11 @@
+\begin{mathpar}
+\inferrule*[Right=Lists]{x : \tlist{T} \\ y : \tlist{T}}
+    {\lev{T}(x, y)}
+\and 
+\inferrule*[Right=Products]{x : (T_1, T_2, \ldots, T_n) \\ y :  (T_1, T_2, \ldots, T_n)}
+    {\sum_{i=0}^n c_id_{T_i}(x_i, y_i)}
+\and 
+\inferrule*[Right=Sums]{x : T_1 | T_2 | \ldots | T_n \\ y : T_1 | T_2 | \ldots | T_n}
+    {1_{\text{type}(x) = \text{type}(y)}d_{\text{type}(x)}(x, y) + 
+    {1_{\text{type}(x) \neq \text{type}(y)}\infty}}
+\end{mathpar}

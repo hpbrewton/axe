@@ -1,0 +1,46 @@
+The Levenshtein edit distance is a commonly used metric for strings.
+It gives the number of substitutions, deletions, or additions to edit one string into another string \cite{wiki:levenshtein}.
+It is well known that the normal Levenshtein distance on strings satifies the properties of a metric.
+There are a couple of assumptions that the Levenshtein metric makes:
+that all substitutions are of the same cost,
+that deletions and additions are of the same cost and the same cost as a substitution.
+While this is a safe assumption for strings of characters,
+it is not genereral, as there might be better substitutions than others.
+For example, 
+it is clear that in a real sense $[1, 2, 3]$ is closer to $[2, 2, 3]$ than it is to $[10, 2, 3]$,
+as a $1$ is closer to a $2$ than a $10$;
+however, the Levenshtein edit distance would be the same from the first string to the second string (1).
+To that end we define the Levenshtein Combinator.
+
+\begin{definition}[Levenshtein Combinator]
+Assume that $d : (T \times T) \to \Rnn$ is a metric.
+Suppose further that $\kappa$ is any positive real.
+Then we say the Levenshtein Combinator of $d$ is  $\lev{d} : (\tlist{T} \times \tlist{T}) \to \Rnn$.
+Such that it is defined on lists of $T$.
+We define the combinator as: 
+$$ \lev{d}(a, b) = \begin{cases} 
+    \kappa | \tail{a} | & |b| = 0 \\
+    \kappa | \tail{b} | & |a| = 0 \\ 
+    \text{min} \begin{cases}
+        \lev{d}(\tail{a}, b) + \kappa \\
+        \lev{d}(a, \tail{b}) + \kappa \\
+        \lev{d}(\tail{a}, \tail{b}) + d(\head{a}, \head{b})  % \lev{d}(\init{a}, b) + \kappa
+    \end{cases} & \otw
+\end{cases}$$
+\end{definition}
+
+The Levenshtein Combinator runs almost the same as the traditional Levenshtein edit distance.
+The only differences are the generalizations of the $\kappa$ from 1,
+and the addition of the metric between elements of the list.
+In fact, the original Levenshtein distance can be recovred by substituting $1$ for $\kappa$,
+and the characteristic function $1_{a \neq b}$ as the $d$ metric.
+We will now show that the Levenshtein combinator of a metric is itself a metric. 
+
+Identity of indiscernibles and symmetry are pretty obvious, and so are omitted.
+The triangle inequality also follows in a similar manner as the proof of traditional levenshtein \cite{j2kun_2014}.
+Suppose we are considering a transformation between lists $X$ and $Z$,
+that is a series of insertion, deletions, and substitutions.
+A transformation from $X$ to some $Y$ followed by a transformation from $X$ to some $Z$
+is a transformation from $X$ to $Z$.
+As the transformation from $X$ to $Z$ is the minimal transformation,
+it follows $d(X, Z) \le d(X, Y) + d(Y, Z)$.

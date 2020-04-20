@@ -1,5 +1,21 @@
 \documentclass{article}
 \usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathpartir}
+
+\usepackage{cite}
+
+\newcommand{\Rnn}{\mathbb{R}^{\ge 0}}
+\newcommand{\otw}{\text{otherwise.}}
+
+\newcommand{\lev}[1]{\text{Lev}_{#1}}
+\newcommand{\tlist}[1]{\text{List}\quad #1}
+\newcommand{\tail}[1]{#1[1:]}
+\newcommand{\head}[1]{#1[0]}
+
+\newtheorem{definition}{Definition}
 
 \begin{document}
 {\centering \Huge \textbf{A Code Search Engine for Go} \\ 
@@ -7,8 +23,29 @@
 \Large
 Harrison Brewton \\
 Advised by Aws Albarghouthi \\ 
-April, 2020 \par
+April, 2020 \\
+\normalsize
+\vspace{0.1cm} \textit{``All programming language proofs are by induction''} \vspace{0.1cm} \par
 }
+%abstract 
+\section{Background}
+\section{Overview}
+\section{Type2Metric}
+\subsection{Levenshtein Combinator}
+\input{levenshtein.tex}
+\subsection{Linear Combinator}
+\input{linearCombo.tex}
+\subsection{From Types To Metrics}
+\input{fromTypesToMetrics.tex}
+\section{Example: Go Code Look Up}
+\subsection{Generics}
+\section{Metric Trees}
+\section{Implementation}
+\section{Related Work}
+\section{Future Work}
+\subsection{Best Approximation}
+\section{Conclusion}
 
-
+\bibliographystyle{unsrt}
+\bibliography{biblio}
 \end{document}

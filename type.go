@@ -29,12 +29,14 @@ type MethodHaver struct {
 }
 
 func SortedMethods(methodMap map[string]*Function) []Type {
+	
 	methodNames := make([]string, len(methodMap))
 	methods := make([]interface{}, len(methodMap))
 	i := 0
 	for name, method := range methodMap {
 		methodNames[i] = name 
 		methods[i] = interface{}(method)
+		i++
 	}
 	SortBy(sort.StringSlice(methodNames), methods)
 	actualMethods := make([]Type, len(methodMap))

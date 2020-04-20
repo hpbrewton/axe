@@ -1,7 +1,6 @@
 package main 
 
 import (
-	"log"
 	"go/types"
 )
 
@@ -10,7 +9,6 @@ type GoToAxeConverter struct {
 }
 
 func (conv *GoToAxeConverter) GoVarToType(va *types.Var) Type {
-	log.Println(va)
 	return conv.GoTypeToAxeType(va.Type())
 }
 

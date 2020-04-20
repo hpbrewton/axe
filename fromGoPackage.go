@@ -11,8 +11,6 @@ import (
 	"go/token"
 	"go/types"
 	"io/ioutil"
-	"sort"
-	"log"
 	"strings"
 )
 
@@ -68,7 +66,7 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 	astFiles := make([]*ast.File, len(pathes))
 	commentMap := make(map[token.Pos]*ast.CommentGroup)
 	count := 0
-	for i, path := range pathes {
+	for _, path := range pathes {
 		if strings.HasSuffix(path, "_test.go") {
 			continue
 		}
@@ -76,7 +74,6 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 		// read in text of file
 		contents, err := ioutil.ReadFile(path)
 		if err != nil {
-			log.Println(i, path)
 			return nil, err
 		}
 
@@ -91,12 +88,11 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 		addDeclsFromFile(commentMap, parsedFile)
 	}
 	astFiles = astFiles[:count]
-	// log.Println(commentMap)
 
 	conf := types.Config{Importer: importer.Default()}
 	pkg, err := conf.Check("bob?", fset, astFiles, nil)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	pkgScope := pkg.Scope()
@@ -173,8 +169,6 @@ func GoFragmentsFromDirectory(root string) ([]*GoFragment, error) {
 			return err 
 		}
 		fragments = append(fragments, frags...)
-		log.Println(path)
-		// log.Println(fragments)
 		return nil
 	})
 
@@ -185,44 +179,3 @@ func GoFragmentsFromDirectory(root string) ([]*GoFragment, error) {
 	return fragments, nil
 }
 
-func main() {
-	// fragments, err := GoFragmentsFromDirectory("data/go/src/archive/tar")
-	fragments, err := GoFragmentsFromDirectory("data/go/src")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	scores := make([]float64, len(fragments))
-	query := &Function{
-		object: nil,
-		arguments: []Type{&Primative{name: "bool"}},
-		output: []Type{&Primative{name: "int"}},
-	}
-	for i, fragment := range fragments {
-		scores[i] = DistanceFragment(fragment, query)
-	}
-	sort.Sort(sort.Reverse(&FragmentStoreWithScore{fragments: fragments, scores: scores}))
-
-	for i, fragment := range fragments {
-		log.Println(scores[i], fragment.url, fragment.typ)
-		switch fragment.typ.(type) {
-		case *MethodHaver:
-			for name, method := range fragment.typ.(*MethodHaver).methods {
-				log.Println("\t", name, method.String())
-			}
-		case *Interface:
-			for name, method := range fragment.typ.(*Interface).methods {
-				log.Println("\t", name, method.String())
-			}
-		}
-	}
-
-	aArray := &Array {
-		size: -1,
-		typ: &Primative{name: "string"},
-	}
-	aTuple := []Type{aArray}
-	bTuple := []Type{&Primative{name: "string"}}
-
-	log.Println(DefaultDistanceConfig.DistanceTuple(aTuple, bTuple))
-}
