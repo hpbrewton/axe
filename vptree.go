@@ -3,6 +3,7 @@ package main
 import (
 	"math"
 	"sort"
+	// "log"
 )
 
 type priorityQueue struct {
@@ -31,6 +32,15 @@ func (pq *priorityQueue) report() []int {
 	return pq.indicies[:pq.seen]
 }
 
+func (pq *priorityQueue) reportUpto(upto float64) []int {
+	for i, v := range pq.scores {
+		if v > upto {
+			return pq.indicies[:i]
+		}
+	}
+	return pq.indicies
+}
+
 // O(|pq|)
 func (pq *priorityQueue) insert(k int, s float64) {
 	pq.indicies = append(pq.indicies, k)
@@ -52,70 +62,64 @@ end:
 }
 
 type VPTree struct {
-	radii []float64
-	positions []int // a list of indicies
+	position int 
+	radius float64
+	left *VPTree
+	right *VPTree
 }
 
 // O(nlogn X m), where m is the cost of the metric
 func NewVPTree(data []int, metric func(int, int)float64) *VPTree {
-	radii := index(data, metric)
-	return &VPTree {
-		radii: radii,
-		positions: data,
+	if len(data) == 0 {
+		return nil
 	}
-}
-
-// O(nlogn X m), where m is the cost of the metric
-func index(data []int, metric func(int, int)float64) []float64{
-	if len(data) <= 1 {
-		return make([]float64, len(data))
+	if len(data) == 1 {
+		return &VPTree{
+			position: data[0],
+			radius: 0,
+			left: nil,
+			right: nil,
+		}
 	}
 
-	pivot := data[0] // maybe do something fancier here TODO
-	sort.Slice(data, func(i, j int) bool{
-		return metric(pivot, i) < metric(pivot, j)
+	pivot := data[0]
+	sort.Slice(data[1:], func(i, j int) bool{
+		return metric(pivot, data[i]) < metric(pivot, data[j])
 	})
-	split := 1+(len(data)-1)/2
-	radius := metric(pivot, data[split-1]) // the furthest in the circle
 
-	lradii := index(data[1:split], metric)
-	rraddi := index(data[split:], metric)
-	return append([]float64{radius}, append(lradii, rraddi...)...)
+	split := len(data)/2
+	radius := metric(pivot, data[split-1])
+	left := NewVPTree(data[1:split], metric)
+	right := NewVPTree(data[split:], metric)
+	return &VPTree{
+		position: pivot,
+		radius: radius,
+		left: left,
+		right: right,
+	}
 }
 
-func lookupAux(positions []int,
-	radii []float64,
-	pq *priorityQueue,
-	metric func(v int)float64,
-	cutoff float64,
-	){
-	if len(positions) == 0 {
+func (vpt *VPTree) lookupAux(pq *priorityQueue, metric func(v int)float64, cutoff float64) {
+	if vpt == nil {
 		return
-	} else if len(positions) == 1 {
-		v := positions[0]
-		pq.insert(v, metric(v))
-	} else {
-		node := positions[0]
-		// radius := radii[0]
-		distance := metric(node)
+	}
 
-		if distance < cutoff {
-			pq.insert(node, distance)
-		}
+	distance := metric(vpt.position)
 
-		split := 1+(len(positions)-1)/2
-		if true { // distance <  radius + cutoff {
-			lookupAux(positions[1:split], radii[1:split], pq, metric, cutoff)
-		}
-		if true { // distance >= radius - cutoff {
-			lookupAux(positions[split:], radii[split:], pq, metric, cutoff)
-		}
+	if distance <= cutoff {
+		pq.insert(vpt.position, distance)
+	}
+	if distance <= vpt.radius + cutoff {
+		vpt.left.lookupAux(pq, metric, cutoff)
+	} 
+	if distance >= vpt.radius - cutoff {
+		vpt.right.lookupAux(pq, metric, cutoff)
 	}
 }
 
 // O(logn X m), where m is the cost of the metric
 func (vpt *VPTree) Lookup(metric func(v int)float64, k int, cutoff float64) []int {
 	pq := mkPQ(k)
-	lookupAux(vpt.positions, vpt.radii, pq, metric, cutoff)
-	return pq.report()
+	vpt.lookupAux(pq, metric, cutoff)
+	return pq.report() //reportUpto(cutoff)
 }

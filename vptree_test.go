@@ -5,6 +5,8 @@ import (
 	"testing"
 	"fmt"
 	"bufio"
+	"log"
+	"time"
 )
 
 const (
@@ -86,51 +88,87 @@ func Looker(objects [][]rune, key []rune) func(v int)float64 {
 	}
 }
 
-func TestIndex(t *testing.T) {
-	data := []int{64, 32, 16, 8, 4, 15}
-	indicies := make([]int, len(data))
-	for i, _ := range data {
-		indicies[i] = i
-	}
-	radii := index(indicies, func(a, b int) float64{
-		together := data[a] ^ data[b]
-		count := 0.0
-		for together != 0 {
-			if together%2 != 0 {
-				count += 1.0
-			}
-			together/=2
-		}
-		return count
-	})
-	t.Log(radii)
-}
-
-func TestVPTree(t *testing.T) {
-	words := GoogleEnglish10000()
+func wordsVPTree(words [][]rune) *VPTree {
 	indicies := make([]int, 10000)
 	for i, _ := range words{
 		indicies[i] = i
 	}
-	vpt := NewVPTree(indicies, func(a int, b int) float64 {
+	return NewVPTree(indicies, func(a int, b int) float64 {
 		aword := words[a]
 		bword := words[b]
 		rl := NewRuneLevenshteiner(aword, bword)
 		return Levenshtein(rl, len(aword), len(bword))
 	})
+}
+
+func TestZeroDistance(t *testing.T) {
+	words := GoogleEnglish10000()
+	vpt := wordsVPTree(words)
 
 	metric := Looker(words, []rune("cat"))
 	output := []string{
 		"cat",
-		"mat",
-		"rat",
-		"chat",
-		"sat",
 	}
-	for i, out := range vpt.Lookup(metric, 5, 1.0) {
+	for i, out := range vpt.Lookup(metric, 5, 0.5) {
+		strout := string(words[out])
+		if i >= len(output) {
+			t.Errorf("unexpected %v", strout)
+			continue
+		}
+		if strout != output[i]{
+			t.Errorf("expected %s, but got %s", output[i], strout)
+		}
+	}
+}
+
+func TestVPTree(t *testing.T) {
+	words := GoogleEnglish10000()
+	vpt := wordsVPTree(words)
+
+	metric := Looker(words, []rune("cat"))
+	output := []string{
+		"fat",
+		"rat",
+		"cast",
+		"cet",
+		"cdt",
+	}
+	recieved := vpt.Lookup(metric, 5, 1.0)
+	if len(recieved) != len(output) {
+		t.Errorf("expected length to be %d, but got %d", len(output), len(recieved))
+	}
+	for i, out := range recieved {
 		strout := string(words[out])
 		if strout != output[i]{
 			t.Errorf("expected %s, but got %s", output[i], strout)
 		}
 	}
 }
+
+func BenchmarkVPTree(b *testing.B) {
+	b.StopTimer()
+	words := GoogleEnglish10000()
+	vpt := wordsVPTree(words)
+	b.StartTimer()
+
+	start := time.Now()
+	metric := Looker(words, []rune("cat"))
+	output := []string{
+		"fat",
+		"rat",
+		"cast",
+		"cet",
+		"cdt",
+	}
+	recieved := vpt.Lookup(metric, 5, 1.0)
+	if len(recieved) != len(output) {
+		b.Errorf("expected length to be %d, but got %d", len(output), len(recieved))
+	}
+	for i, out := range recieved {
+		strout := string(words[out])
+		if strout != output[i]{
+			b.Errorf("expected %s, but got %s", output[i], strout)
+		}
+	}
+	log.Println(time.Now().Sub(start))
+} 
