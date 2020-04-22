@@ -6,6 +6,10 @@
     {\sum_{i=0}^n c_id_{T_i}(x_i, y_i)}
 \and 
 \inferrule*[Right=Sums]{x : T_1 | T_2 | \ldots | T_n \\ y : T_1 | T_2 | \ldots | T_n}
-    {1_{\text{type}(x) = \text{type}(y)}d_{\text{type}(x)}(x, y) + 
-    {1_{\text{type}(x) \neq \text{type}(y)}\infty}}
+    {1_{\text{type}(x) = \text{type}(y)} \min(\kappa, d_{\text{type}(x)}(x, y)) + 
+    {1_{\text{type}(x) \neq \text{type}(y)}\kappa}}
+\and 
+\inferrule*[Right=Map]{x : \tmap{T_1}{T_2}}{\ldots}
+\and 
+\inferrule*[Right=Number]{x : T_1 \\ y :}{}
 \end{mathpar}

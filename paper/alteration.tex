@@ -1,0 +1,26 @@
+Suppose that we have a tuple $(n, v)$, where $n$ is some natural number less than some $N$,
+and a mapping $f : n \to (v \times v \to \R)$.
+Then we can define the alteration combinator on these tuples.
+
+\begin{definition}[Alteration Combinator]
+Let $T = E \times V$, such that $E$ is some finite set of objects, and $V$ is any other set of objects.
+Let $f : E \to (V \times V \to \R)$ be a relation, such that for all $e$ in $E$, 
+we have $(f e)$ restricted to $\{ (d, v) \in T : d = e \}$ is a metric on that restriction.
+Furthermore, let $\kappa \in \R^{+}$.
+Then we define the alteration combinator $Alt : f \to T \times T \to \Rnn$
+$$ Alt(f, ((e_1, v_1), (e_2, v_2))) = \begin{cases}
+    \min( [f e_1](v_1, v_2), \kappa) & e_1 = e_2 \\ 
+    \kappa & \otw
+\end{cases}$$
+\end{definition}
+
+Symmetry, and identity of indiscernables is pretty straightforward.
+The triangle inequality for $Alt(f)$, is a little trickier.
+We consider four cases. 
+Let $A$, $B$, and $C$ all be in $E$.
+We can consider the triangle inequality as triple of three of these types,
+and ask where it will hold. 
+If all three are of the same type $(A, A, A)$, then the inequality is inherited by that of $(f A)$.
+Consider $(A, A, B)$, then the inequality can be seen $(f A)(A, A) \le \kappa \le (f A)(A, A) + \kappa \le (f A)(A, A) + Alt(f)(A, B)$
+Consider $(A, B, B)$, then the inequality can be seen $(f A)(A, B) = \kappa \le \kappa + (f B)(B, B)$.
+Consider $(A, B, C)$, then the inequality obviously holds.

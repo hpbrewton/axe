@@ -7,11 +7,13 @@
 
 \usepackage{cite}
 
+\newcommand{\R}{\mathbb{R}}
 \newcommand{\Rnn}{\mathbb{R}^{\ge 0}}
 \newcommand{\otw}{\text{otherwise.}}
 
 \newcommand{\lev}[1]{\text{Lev}_{#1}}
 \newcommand{\tlist}[1]{\text{List}\quad #1}
+\newcommand{\tmap}[2]{\text{Map}\quad #1 \quad #2}
 \newcommand{\tail}[1]{#1[1:]}
 \newcommand{\head}[1]{#1[0]}
 
@@ -35,11 +37,14 @@ April, 2020 \\
 \input{levenshtein.tex}
 \subsection{Linear Combinator}
 \input{linearCombo.tex}
+\subsection{Alteration}
+\input{alteration.tex}
 \subsection{From Types To Metrics}
 \input{fromTypesToMetrics.tex}
 \section{Example: Go Code Look Up}
 \subsection{Generics}
 \section{Metric Trees}
+\input{metricTrees.tex}
 \section{Implementation}
 \section{Related Work}
 \section{Future Work}
