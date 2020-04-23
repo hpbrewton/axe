@@ -1,13 +1,10 @@
 package main 
 
-import (
-	"log"
-)
-
 type SliceLevenshteiner struct {
 	l []interface{}
 	r []interface{}
 	store [][]float64
+	addVarCost float64
 	metric Metric
 }
 
@@ -19,17 +16,11 @@ func NewSliceLevenshteiner(addVarCost float64, metric Metric, l, r []interface{}
 			store[i][j] = -1
 		}
 	}
-	for i, _ := range l {
-		store[i+1][0] = float64(i+1)*addVarCost
-	}
-	for j, _ := range r {
-		store[0][j+1] = float64(j+1)*addVarCost
-	}
-	log.Println(store)
 	return &SliceLevenshteiner{
 		l: l,
 		r: r,
 		store: store,
+		addVarCost: addVarCost,
 		metric: metric,
 	}
 }
@@ -44,4 +35,8 @@ func (sl *SliceLevenshteiner) Get(i, j int) float64 {
 
 func (sl *SliceLevenshteiner) Score(i, j int) float64 {
 	return sl.metric(sl.l[i-1], sl.r[j-1])
+}
+
+func (sl *SliceLevenshteiner) Offset() float64 {
+	return sl.addVarCost
 }

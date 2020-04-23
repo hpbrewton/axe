@@ -56,6 +56,7 @@ type Levenshteiner interface {
 	Set(i, j int, v float64)
 	Get(i, j int) float64 // should return -1 if not set
 	Score(i, j int) float64
+	Offset() float64
 }
 
 func Levenshtein(ler Levenshteiner, i, j int) (v float64) {
@@ -65,14 +66,16 @@ func Levenshtein(ler Levenshteiner, i, j int) (v float64) {
 	}
 
 	if Min(i, j) == 0 {
-		v = float64(Max(i, j))
+		v = float64(Max(i, j)) * ler.Offset()
 	} else {
-		idown := Levenshtein(ler, i-1, j) + 1
-		jdown := Levenshtein(ler, i, j-1) + 1
+		idown := Levenshtein(ler, i-1, j) + ler.Offset()
+		jdown := Levenshtein(ler, i, j-1) + ler.Offset()
 		ddown := Levenshtein(ler, i-1, j-1) + ler.Score(i, j)
 		v = math.Min(math.Min(idown, jdown), ddown)
 	}
 	ler.Set(i, j, v)
 	return
 }
+
+
 

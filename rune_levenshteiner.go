@@ -49,3 +49,7 @@ func (rl *RuneLevenshteiner) Score(i, j int) float64 {
 		return 1
 	}
 }
+
+func (rl *RuneLevenshteiner) Offset() float64 {
+	return 1.0
+}

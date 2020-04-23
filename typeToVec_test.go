@@ -7,7 +7,7 @@ import (
 
 var mc = &MetricConfig{
 	AddElemCost: 2.0,
-	AddElemCostChan: 3.0,
+	AddElemCostChan: 10.0,
 	DefaultFieldCost: 2.0,
 }
 
@@ -60,6 +60,7 @@ func TestDistances(t *testing.T){
 	close(l)
 	r := make(chan int, 5)
 	r <- 1
+	r <- 14
 	close(r)
 	DistanceCheck(t, l, r, 12)
 	DistanceCheck(t, "cat", "coat", 1.0)
