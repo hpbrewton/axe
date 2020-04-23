@@ -5,6 +5,8 @@ import (
 	"reflect"
 )
 
+type hole struct {}
+
 var mc = &MetricConfig{
 	AddElemCost: 15.0,
 	AddElemCostChan: 10.0,
@@ -14,12 +16,15 @@ var mc = &MetricConfig{
 		"point": reflect.TypeOf(point{}),
 		"unexpoint": reflect.TypeOf(unexpoint{}),
 	},
-	InterfaceCap: 10.0,
+	InterfaceCap: 12.0,
+	Hole: reflect.TypeOf(&hole{}),
+	HoleDistance: 0.0001,
 }
 
 func DistanceCheck(t *testing.T, l, r interface{}, expected float64) {
-	typ := reflect.TypeOf(l)
-	metric, err  := mc.GetMetric(typ)
+	lt := reflect.TypeOf(l)
+	rt := reflect.TypeOf(r)
+	metric, err  := mc.GetMetric(lt, rt)
 	if err != nil {
 		t.Error(err)
 		t.Fatalf("expected to be able to get metric for %v", l)
@@ -86,6 +91,8 @@ func TestDistances(t *testing.T){
 	DistanceCheck(t, 
 		object{"left", []yer{&point{1, 2}, &point{1, 2}}}, 
 		object{"left", []yer{&point{1, 2}, &unexpoint{1, 2}}},
-		10.0,
+		mc.InterfaceCap,
 	)
+	DistanceCheck(t, "cat", &hole{}, mc.HoleDistance)
+	DistanceCheck(t, []interface{}{"cat"}, []interface{}{&hole{}}, mc.HoleDistance)
 }

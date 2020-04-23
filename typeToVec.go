@@ -40,6 +40,8 @@ type MetricConfig struct {
 	FieldMultipliers map[string]*float64
 	TypeMap map[string]reflect.Type
 	InterfaceCap float64
+	Hole reflect.Type
+	HoleDistance float64
 }
 
 type Metric func(a, b interface{}) float64 
@@ -81,12 +83,14 @@ func (mc *MetricConfig) NumberMetric(converter Numberer) Metric {
 		return math.Abs(nl - nr)
 	}
 }
-func (mc *MetricConfig) DiscreteMetric(l, r interface{}) float64 {
-	if l == r {
-		return 0.0
-	} else {
-		return 1.0
-	}
+func (mc *MetricConfig) DiscreteMetric(dist float64) Metric {
+	return func(l, r interface{})float64{
+		if l == r {
+			return 0.0
+		} else {
+			return dist
+		}
+	}	
 }
 func (mc *MetricConfig) Complex64Metric(l, r interface{}) float64 {
 	return cmplx.Abs(complex128(l.(complex64)) - complex128(r.(complex64)))
@@ -94,9 +98,10 @@ func (mc *MetricConfig) Complex64Metric(l, r interface{}) float64 {
 func (mc *MetricConfig) Complex128Metric(l, r interface{}) float64 {
 	return cmplx.Abs(l.(complex128) - r.(complex128))
 }
-func (mc *MetricConfig) ArrayMetric(e reflect.Type) (Metric, error) {
-	typ := e.Elem()
-	elemMetric, err := mc.GetMetric(typ)
+func (mc *MetricConfig) ArrayMetric(lt, rt reflect.Type) (Metric, error) {
+	lelem := lt.Elem()
+	relem := rt.Elem()
+	elemMetric, err := mc.GetMetric(lelem, relem)
 	if err != nil {
 		return nil, err 
 	} else {
@@ -111,9 +116,10 @@ func (mc *MetricConfig) ArrayMetric(e reflect.Type) (Metric, error) {
 		return f, nil
 	}
 }
-func (mc *MetricConfig) ChanMetric(e reflect.Type) (Metric, error) {
-	typ := e.Elem()
-	elemMetric, err := mc.GetMetric(typ)
+func (mc *MetricConfig) ChanMetric(lt, rt reflect.Type) (Metric, error) {
+	lelem := lt.Elem()
+	relem := rt.Elem()
+	elemMetric, err := mc.GetMetric(lelem, relem)
 	if err != nil {
 		return nil, err 
 	} else {
@@ -127,27 +133,27 @@ func (mc *MetricConfig) ChanMetric(e reflect.Type) (Metric, error) {
 		return f, nil
 	}
 }
-func (mc *MetricConfig) StructMetric(t reflect.Type) (Metric, error) {
-	nfields := t.NumField()
+func (mc *MetricConfig) StructMetric(lt, rt reflect.Type) (Metric, error) {
+	nfields := lt.NumField()
 
 	f := func (l, r interface{})float64 {
 		var total float64 = 0 
 		lo, ro := reflect.ValueOf(l), reflect.ValueOf(r)
 		for i := 0; i < nfields; i++ {
-			structField := t.Field(i)
+			structField := lt.Field(i)
 			if structField.PkgPath != "" {
 				continue //not exported, ignore
 			}
 			fieldType := structField.Type 
 			tag := structField.Tag
 
-			metric, err := mc.GetMetric(fieldType)
+			metric, err := mc.GetMetric(fieldType, rt.Field(i).Type)
 			if err != nil {
 				panic(err) // we eventually will get rid of all errors
 			}
 
 			// set field identifiers if not present, otw get it 
-			identifier := fmt.Sprintf("%s/%s", structField.Name, t.PkgPath())
+			identifier := fmt.Sprintf("%s/%s", structField.Name, lt.PkgPath())
 			var multipler float64
 			if val, ok := mc.FieldMultipliers[identifier]; ok {
 				multipler = *val 
@@ -170,12 +176,12 @@ func (mc *MetricConfig) StructMetric(t reflect.Type) (Metric, error) {
 	return f, nil
 }
 
-func (mc *MetricConfig) PointerMetric(t reflect.Type) (Metric, error) {
+func (mc *MetricConfig) PointerMetric(lt, rt reflect.Type) (Metric, error) {
 	f := func(l, r interface{})float64 {
 		lp, rp := reflect.ValueOf(l), reflect.ValueOf(r)
 		lv, rv := reflect.Indirect(lp), reflect.Indirect(rp)
-		lt := reflect.TypeOf(lv)
-		metric, err := mc.GetMetric(lt)
+		lti, rti := reflect.TypeOf(lv), reflect.TypeOf(rv)
+		metric, err := mc.GetMetric(lti, rti)
 		if err != nil {
 			panic(err)
 		}
@@ -188,21 +194,24 @@ func (mc *MetricConfig) InterfaceMetric() (Metric, error) {
 	f := func(l, r interface{})float64{
 		lt := reflect.TypeOf(l)
 		rt := reflect.TypeOf(r)
-		if lt == rt {
-			metric, err := mc.GetMetric(lt)
-			if err != nil {
-				panic(err)
-			}
-			return math.Min(mc.InterfaceCap, metric(l, r))
-		} else {
+		metric, err := mc.GetMetric(lt, rt)
+		if err != nil {
 			return mc.InterfaceCap
+		} else {
+			return math.Min(mc.InterfaceCap, metric(l, r))
 		}
 	}
 	return f, nil
 }
  
-func (mc *MetricConfig) GetMetric(t reflect.Type) (Metric, error) {
-	switch t.Kind() {
+func (mc *MetricConfig) GetMetric(l, r reflect.Type) (Metric, error) {
+	if l == mc.Hole || r == mc.Hole {
+		return mc.DiscreteMetric(mc.HoleDistance), nil
+	}
+	if l != r {
+		return nil, errors.New("unequal type, and neither is a hole")
+	}
+	switch l.Kind() {
 	case reflect.Bool: return mc.NumberMetric(fromBool), nil
 	case reflect.Int: return mc.NumberMetric(fromInt), nil 
 	case reflect.Int8: return mc.NumberMetric(fromInt8), nil
@@ -214,18 +223,18 @@ func (mc *MetricConfig) GetMetric(t reflect.Type) (Metric, error) {
 	case reflect.Uint16: return mc.NumberMetric(fromUint16), nil
 	case reflect.Uint32: return mc.NumberMetric(fromUint32), nil
 	case reflect.Uint64: return mc.NumberMetric(fromUint64), nil
-	case reflect.Uintptr: return mc.DiscreteMetric, nil
+	case reflect.Uintptr: return mc.DiscreteMetric(1.0), nil
 	case reflect.Float32: return mc.NumberMetric(fromFloat32), nil
 	case reflect.Float64: return mc.NumberMetric(fromFloat64), nil
 	case reflect.Complex64: return mc.Complex64Metric, nil
 	case reflect.Complex128: return mc.Complex128Metric, nil
-	case reflect.Array: return mc.ArrayMetric(t)
-	case reflect.Chan: return mc.ChanMetric(t)
-	case reflect.Struct: return mc.StructMetric(t)
-	case reflect.Ptr: return mc.PointerMetric(t)
+	case reflect.Array: return mc.ArrayMetric(l, r)
+	case reflect.Chan: return mc.ChanMetric(l, r)
+	case reflect.Struct: return mc.StructMetric(l, r)
+	case reflect.Ptr: return mc.PointerMetric(l, r)
 	case reflect.Interface: return mc.InterfaceMetric() //return nil, errors.New(fmt.Sprintf("Interfaces can not directly be converted into metrics, consider wrapping in an object"))
 	case reflect.String: return mc.StringMetric(), nil 
-	case reflect.Slice: return mc.ArrayMetric(t)
-	default: return nil, errors.New(fmt.Sprintf("undefined for type %s", t.String()))
+	case reflect.Slice: return mc.ArrayMetric(l, r)
+	default: return nil, errors.New(fmt.Sprintf("undefined for type %s", l.String()))
 	}
 }
