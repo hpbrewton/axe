@@ -38,7 +38,6 @@ type MetricConfig struct {
 	AddElemCostChan float64
 	DefaultFieldCost float64
 	FieldMultipliers map[string]*float64
-	TypeMap map[string]reflect.Type
 	InterfaceCap float64
 	Hole reflect.Type
 	HoleDistance float64
@@ -180,7 +179,7 @@ func (mc *MetricConfig) PointerMetric(lt, rt reflect.Type) (Metric, error) {
 	f := func(l, r interface{})float64 {
 		lp, rp := reflect.ValueOf(l), reflect.ValueOf(r)
 		lv, rv := reflect.Indirect(lp), reflect.Indirect(rp)
-		lti, rti := reflect.TypeOf(lv), reflect.TypeOf(rv)
+		lti, rti := lv.Type(), rv.Type()
 		metric, err := mc.GetMetric(lti, rti)
 		if err != nil {
 			panic(err)
@@ -205,6 +204,9 @@ func (mc *MetricConfig) InterfaceMetric() (Metric, error) {
 }
  
 func (mc *MetricConfig) GetMetric(l, r reflect.Type) (Metric, error) {
+	if l == nil && r == nil {
+		return func(l,r interface{})float64{return 0}, nil
+	}
 	if l == mc.Hole || r == mc.Hole {
 		return mc.DiscreteMetric(mc.HoleDistance), nil
 	}

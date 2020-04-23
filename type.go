@@ -51,11 +51,11 @@ func (mh *MethodHaver) String() string {
 }
 
 type Primative struct {
-	name string
+	Name string
 }
 
 func (primative *Primative) String() string {
-	return primative.name
+	return primative.Name
 }
 
 type Kind struct {
@@ -84,20 +84,20 @@ func (array *Array) String() string {
 }
 
 type Function struct {
-	object Type // hey bud, it's worth noting that this can be nil
-	arguments []Type
-	output []Type
+	Object Type // hey bud, it's worth noting that this can be nil
+	Arguments []Type
+	Output []Type
 }
 
 func (function *Function) String() string {
 	var str string
-	if function.object == nil {
+	if function.Object == nil {
 		str = ""
 	} else {
-		str = function.object.String()
+		str = function.Object.String()
 		str = fmt.Sprintf("%s -> ", str)
 	}
-	return fmt.Sprintf("%s%v -> %v", str, function.arguments, function.output)
+	return fmt.Sprintf("%s%v -> %v", str, function.Arguments, function.Output)
 }
 
 type Struct struct {

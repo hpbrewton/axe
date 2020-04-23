@@ -12,10 +12,6 @@ var mc = &MetricConfig{
 	AddElemCostChan: 10.0,
 	DefaultFieldCost: 2.0,
 	FieldMultipliers: make(map[string]*float64),
-	TypeMap: map[string]reflect.Type{
-		"point": reflect.TypeOf(point{}),
-		"unexpoint": reflect.TypeOf(unexpoint{}),
-	},
 	InterfaceCap: 12.0,
 	Hole: reflect.TypeOf(&hole{}),
 	HoleDistance: 0.0001,
