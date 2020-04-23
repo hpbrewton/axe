@@ -15,8 +15,8 @@ func (conv *GoToAxeConverter) GoVarToType(va *types.Var) Type {
 func (conv *GoToAxeConverter) GoPointerToAxeKind(ptr *types.Pointer) *Kind {
 	underType := conv.GoTypeToAxeType(ptr.Elem())
 	return &Kind {
-		name: "*",
-		arguments: []Type{underType},
+		Name: "*",
+		Arguments: []Type{underType},
 	}
 }
 
@@ -43,25 +43,25 @@ func (conv *GoToAxeConverter) GoSignatureToAxeFunction(sig *types.Signature) *Fu
 		typ = conv.GoVarToType(recv)
 	}
 	return &Function {
-		object: typ,
-		arguments: conv.GoTupleToSliceOfAxeTypes(sig.Params()),
-		output: conv.GoTupleToSliceOfAxeTypes(sig.Results()),
+		Object: typ,
+		Arguments: conv.GoTupleToSliceOfAxeTypes(sig.Params()),
+		Output: conv.GoTupleToSliceOfAxeTypes(sig.Results()),
 	}
 }
 
 func (conv *GoToAxeConverter) GoArrayToAxeArray(array *types.Array) *Array {
 	underlying := conv.GoTypeToAxeType(array.Elem())
 	return &Array {
-		size: int(array.Len()),
-		typ: underlying,
+		Size: int(array.Len()),
+		Typ: underlying,
 	}
 }
 
 func (conv *GoToAxeConverter) GoSliceToAxeKind(slice *types.Slice) *Kind {
 	underlying := conv.GoTypeToAxeType(slice.Elem())
 	return &Kind{
-		name: "slice",
-		arguments: []Type{underlying},
+		Name: "slice",
+		Arguments: []Type{underlying},
 	}
 }
 
@@ -69,16 +69,16 @@ func (conv *GoToAxeConverter) GoMapToAxeKind(mp *types.Map) *Kind {
 	from := conv.GoTypeToAxeType(mp.Key())
 	to := conv.GoTypeToAxeType(mp.Elem())
 	return &Kind {
-		name: "map",
-		arguments: []Type{from, to},
+		Name: "map",
+		Arguments: []Type{from, to},
 	}
 }
 
 func (conv *GoToAxeConverter) GoChanToAxeKind(ch *types.Chan) *Kind {
 	underlying := conv.GoTypeToAxeType(ch.Elem())
 	return &Kind {
-		name: "chan",
-		arguments: []Type{underlying},
+		Name: "chan",
+		Arguments: []Type{underlying},
 	}
 }
 
@@ -92,8 +92,8 @@ func (conv *GoToAxeConverter) GoStructToAxeStruct(strct *types.Struct) *Struct {
 		fields[i] = conv.GoVarToType(va)
 	}
 	return &Struct {
-		fieldNames: fieldNames,
-		fields: fields,
+		FieldNames: fieldNames,
+		Fields: fields,
 	}
 }
 
@@ -113,7 +113,7 @@ func (conv *GoToAxeConverter) GoNamedToAxeMethodHaver(named *types.Named) *Metho
 		methods[function.Name()] = axeFunction
 	}	
 	self := conv.GoTypeToAxeType(named.Underlying())
-	mh.name = named.String()
+	mh.Name = named.String()
 	mh.self = self
 	mh.methods = methods
 	return &mh
@@ -135,8 +135,8 @@ func (conv *GoToAxeConverter) GoInterfaceToAxeInterface(gNtrf *types.Interface) 
 		axeFunction := conv.GoSignatureToAxeFunction(functionSig)
 		methods[function.Name()] = axeFunction
 	}
-	aNtrf.name = gNtrf.String()
-	aNtrf.implements = implements
+	aNtrf.Name = gNtrf.String()
+	aNtrf.Implements = implements
 	aNtrf.methods = methods
 
 	return &aNtrf

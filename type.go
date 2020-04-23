@@ -5,7 +5,6 @@ import (
 	"strings"
 	"strconv"
 	"reflect"
-	"sort"
 )
 
 type Type interface {
@@ -13,41 +12,23 @@ type Type interface {
 }
 
 type Interface struct {
-	name string
-	implements []Type
+	Name string
+	Implements []Type
 	methods map[string]*Function
 }
 
 func (ntrf *Interface) String() string {
-	return fmt.Sprintf("%s", ntrf.name)
+	return fmt.Sprintf("%s", ntrf.Name)
 }
 
 type MethodHaver struct {
-	name string
+	Name string
 	self Type
 	methods map[string]*Function
 }
 
-func SortedMethods(methodMap map[string]*Function) []Type {
-	
-	methodNames := make([]string, len(methodMap))
-	methods := make([]interface{}, len(methodMap))
-	i := 0
-	for name, method := range methodMap {
-		methodNames[i] = name 
-		methods[i] = interface{}(method)
-		i++
-	}
-	SortBy(sort.StringSlice(methodNames), methods)
-	actualMethods := make([]Type, len(methodMap))
-	for i, intfMethod := range methods {
-		actualMethods[i] = intfMethod.(Type)
-	}
-	return actualMethods
-}
-
 func (mh *MethodHaver) String() string {
-	return mh.name
+	return mh.Name
 }
 
 type Primative struct {
@@ -59,28 +40,28 @@ func (primative *Primative) String() string {
 }
 
 type Kind struct {
-	name string 
-	arguments []Type
+	Name string 
+	Arguments []Type
 }
 
 func (kind *Kind) String() string {
-	return fmt.Sprintf("(%s %v)", kind.name, kind.arguments)
+	return fmt.Sprintf("(%s %v)", kind.Name, kind.Arguments)
 }
 
 // a negative indicates unknown size
 type Array struct {
-	size int
-	typ Type
+	Size int
+	Typ Type
 }
 
 func (array *Array) String() string {
 	var sizeStr string
-	if array.size < 0 {
+	if array.Size < 0 {
 		sizeStr = ""
 	} else {			
-		sizeStr = strconv.Itoa(array.size)
+		sizeStr = strconv.Itoa(array.Size)
 	}
-	return fmt.Sprintf("[%s]%s", sizeStr, array.typ)
+	return fmt.Sprintf("[%s]%s", sizeStr, array.Typ)
 }
 
 type Function struct {
@@ -101,15 +82,15 @@ func (function *Function) String() string {
 }
 
 type Struct struct {
-	fieldNames []string
-	fields []Type 
+	FieldNames []string
+	Fields []Type 
 }
 
 func (strct *Struct) String() string {
 	var b strings.Builder
 	b.WriteString("<")
-	for i, fieldName := range strct.fieldNames {
-		fmt.Fprintf(&b, "%s:%v, ", fieldName, strct.fields[i])
+	for i, fieldName := range strct.FieldNames {
+		fmt.Fprintf(&b, "%s:%v, ", fieldName, strct.Fields[i])
 	}
 	b.WriteString(">")
 	return b.String()

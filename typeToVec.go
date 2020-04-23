@@ -7,7 +7,6 @@ import (
 	"errors"
 	"strconv"
 	"math/cmplx"
-	"log"
 )
 
 func toArrayEmptyInterface(ev interface{})[]interface{} {
@@ -109,7 +108,6 @@ func (mc *MetricConfig) ArrayMetric(lt, rt reflect.Type) (Metric, error) {
 			ra := toArrayEmptyInterface(r)
 			sl := NewSliceLevenshteiner(mc.AddElemCost, elemMetric, la, ra)
 			d := Levenshtein(sl, len(la), len(ra))
-			log.Println(d)
 			return d
 		}
 		return f, nil

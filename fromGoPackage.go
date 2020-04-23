@@ -109,7 +109,7 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 		// getting comments
 		commentGroup, ok := commentMap[object.Pos()]
 		if ok {
-			fragment.comment = commentGroup.Text()
+			fragment.Comment = commentGroup.Text()
 		}
 
 		fragment.pkg = pkg
@@ -118,7 +118,7 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 		fragment.url = fmt.Sprintf("%v/%v", pkg.Name(), object.Name())
 
 		// getting type
-		fragment.typ = conv.GoTypeToAxeType(object.Type())
+		fragment.Typ = conv.GoTypeToAxeType(object.Type())
 
 		// TODO get position // Or maybe not, just give name
 
