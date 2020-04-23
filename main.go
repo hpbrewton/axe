@@ -42,11 +42,9 @@ func main() {
 		url: "",
 		Typ: &Function{
 			Object: nil,
-			Arguments: []Type{&Kind{
-				Name: "*",
-				Arguments: []Type{&Primative{
+			Arguments: []Type{&Primative{
 					Name: "string",
-			}}}},
+			}},
 			Output: []Type{
 				&Hole{},
 				&Hole{}, 

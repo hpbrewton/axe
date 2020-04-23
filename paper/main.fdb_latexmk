@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex main"] 1587526483 "main.aux" "main.bbl" "main" 1587526484
+["bibtex main"] 1587679413 "main.aux" "main.bbl" "main" 1587679414
   "/usr/local/texlive/2019/texmf-dist/bibtex/bst/base/unsrt.bst" 1292289607 18030 1376b4b231b50c66211e47e42eda2875 ""
   "biblio.bib" 1587348106 431 f8962f696fbc2b0abcccb568a3a2b044 ""
-  "main.aux" 1587526484 1674 f548d8e48681c95029f9e615f051e4e4 "pdflatex"
+  "main.aux" 1587679413 1674 4e11715a6448638c61d731b7cb2d16c2 "pdflatex"
   (generated)
-  "main.blg"
   "main.bbl"
-["pdflatex"] 1587526484 "/Users/harrison/axe/paper/main.tex" "/Users/harrison/axe/paper/main.pdf" "main" 1587526484
-  "/Users/harrison/axe/paper/main.aux" 1587526484 1674 f548d8e48681c95029f9e615f051e4e4 ""
-  "/Users/harrison/axe/paper/main.tex" 1587525671 1365 68be73b3f426de1e063ca4d4bf8f23e4 ""
+  "main.blg"
+["pdflatex"] 1587679413 "/Users/harrison/axe/paper/main.tex" "/Users/harrison/axe/paper/main.pdf" "main" 1587679414
+  "/Users/harrison/axe/paper/main.aux" 1587679413 1674 4e11715a6448638c61d731b7cb2d16c2 ""
+  "/Users/harrison/axe/paper/main.tex" 1587679410 1386 67d3b069d616ffdbc242f5d94f9389b5 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -62,17 +62,18 @@
   "/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1557342064 3277517 23507ed665b4dd9046f0f2a94bbef2be ""
   "/usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1557342086 4259635 562fc36ec496993777a6c428d8bfb811 ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
+  "abstract.tex" 1587679383 752 15d8c573762ebee91bc13872f3f68574 ""
   "alteration.tex" 1587525647 1481 768e986ee5f1af8a5a8d78c23ca41438 ""
   "fromTypesToMetrics.tex" 1587524295 576 976e5d3a273b72f85cb9deb1320a14cf ""
   "levenshtein.tex" 1587348297 2658 4f5df7aa199ba53e9f1ec607c3be97f6 ""
   "linearCombo.tex" 1587349569 427 01f4a32b5af93a652b897ff13f514d4d ""
-  "main.aux" 1587526484 1674 f548d8e48681c95029f9e615f051e4e4 "pdflatex"
-  "main.bbl" 1587526484 258 25eb31de398b5225d0c37126e1ce8f8a "bibtex main"
-  "main.tex" 1587525671 1365 68be73b3f426de1e063ca4d4bf8f23e4 ""
+  "main.aux" 1587679413 1674 4e11715a6448638c61d731b7cb2d16c2 "pdflatex"
+  "main.bbl" 1587679413 258 25eb31de398b5225d0c37126e1ce8f8a "bibtex main"
+  "main.tex" 1587679410 1386 67d3b069d616ffdbc242f5d94f9389b5 ""
   "metricTrees.tex" 1587525708 76 84a71fc2f91436718f7bde6482fb855e ""
   (generated)
-  "main.aux"
-  "main.pdf"
-  "/Users/harrison/axe/paper/main.pdf"
-  "main.log"
   "/Users/harrison/axe/paper/main.log"
+  "main.log"
+  "main.pdf"
+  "main.aux"
+  "/Users/harrison/axe/paper/main.pdf"
