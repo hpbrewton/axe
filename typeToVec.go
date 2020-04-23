@@ -5,8 +5,9 @@ import (
 	"math"
 	"reflect"
 	"errors"
-	"log"
+	"strconv"
 	"math/cmplx"
+	"log"
 )
 
 func toArrayEmptyInterface(ev interface{})[]interface{} {
@@ -36,6 +37,9 @@ type MetricConfig struct {
 	AddElemCost float64
 	AddElemCostChan float64
 	DefaultFieldCost float64
+	FieldMultipliers map[string]*float64
+	TypeMap map[string]reflect.Type
+	InterfaceCap float64
 }
 
 type Metric func(a, b interface{}) float64 
@@ -100,7 +104,9 @@ func (mc *MetricConfig) ArrayMetric(e reflect.Type) (Metric, error) {
 			la := toArrayEmptyInterface(l)
 			ra := toArrayEmptyInterface(r)
 			sl := NewSliceLevenshteiner(mc.AddElemCost, elemMetric, la, ra)
-			return Levenshtein(sl, len(la), len(ra))
+			d := Levenshtein(sl, len(la), len(ra))
+			log.Println(d)
+			return d
 		}
 		return f, nil
 	}
@@ -116,7 +122,6 @@ func (mc *MetricConfig) ChanMetric(e reflect.Type) (Metric, error) {
 			ra := toArrayEmptyInterfaceChan(r) 
 			sl := NewSliceLevenshteiner(mc.AddElemCostChan, elemMetric, la, ra)
 			d := Levenshtein(sl, len(la), len(ra))
-			log.Println(sl.store)
 			return d
 		}
 		return f, nil
@@ -134,13 +139,64 @@ func (mc *MetricConfig) StructMetric(t reflect.Type) (Metric, error) {
 				continue //not exported, ignore
 			}
 			fieldType := structField.Type 
+			tag := structField.Tag
+
 			metric, err := mc.GetMetric(fieldType)
 			if err != nil {
 				panic(err) // we eventually will get rid of all errors
 			}
-			total += mc.DefaultFieldCost*metric(lo.Field(i).Interface(), ro.Field(i).Interface())
+
+			// set field identifiers if not present, otw get it 
+			identifier := fmt.Sprintf("%s/%s", structField.Name, t.PkgPath())
+			var multipler float64
+			if val, ok := mc.FieldMultipliers[identifier]; ok {
+				multipler = *val 
+			} else {
+				field := tag.Get("type2vec")
+				foundMultiplier, err := strconv.ParseFloat(field, 64)
+				if err != nil {
+					multipler = mc.DefaultFieldCost
+				} else {
+					multipler = foundMultiplier
+				}
+				mc.FieldMultipliers[identifier] = &multipler
+			}
+			
+			d := metric(lo.Field(i).Interface(), ro.Field(i).Interface())
+			total += d*multipler
 		}
 		return total
+	}
+	return f, nil
+}
+
+func (mc *MetricConfig) PointerMetric(t reflect.Type) (Metric, error) {
+	f := func(l, r interface{})float64 {
+		lp, rp := reflect.ValueOf(l), reflect.ValueOf(r)
+		lv, rv := reflect.Indirect(lp), reflect.Indirect(rp)
+		lt := reflect.TypeOf(lv)
+		metric, err := mc.GetMetric(lt)
+		if err != nil {
+			panic(err)
+		}
+		return metric(lv.Interface(), rv.Interface())
+	}
+	return f, nil
+}
+
+func (mc *MetricConfig) InterfaceMetric() (Metric, error) {
+	f := func(l, r interface{})float64{
+		lt := reflect.TypeOf(l)
+		rt := reflect.TypeOf(r)
+		if lt == rt {
+			metric, err := mc.GetMetric(lt)
+			if err != nil {
+				panic(err)
+			}
+			return math.Min(mc.InterfaceCap, metric(l, r))
+		} else {
+			return mc.InterfaceCap
+		}
 	}
 	return f, nil
 }
@@ -166,6 +222,8 @@ func (mc *MetricConfig) GetMetric(t reflect.Type) (Metric, error) {
 	case reflect.Array: return mc.ArrayMetric(t)
 	case reflect.Chan: return mc.ChanMetric(t)
 	case reflect.Struct: return mc.StructMetric(t)
+	case reflect.Ptr: return mc.PointerMetric(t)
+	case reflect.Interface: return mc.InterfaceMetric() //return nil, errors.New(fmt.Sprintf("Interfaces can not directly be converted into metrics, consider wrapping in an object"))
 	case reflect.String: return mc.StringMetric(), nil 
 	case reflect.Slice: return mc.ArrayMetric(t)
 	default: return nil, errors.New(fmt.Sprintf("undefined for type %s", t.String()))

@@ -6,9 +6,15 @@ import (
 )
 
 var mc = &MetricConfig{
-	AddElemCost: 2.0,
+	AddElemCost: 15.0,
 	AddElemCostChan: 10.0,
 	DefaultFieldCost: 2.0,
+	FieldMultipliers: make(map[string]*float64),
+	TypeMap: map[string]reflect.Type{
+		"point": reflect.TypeOf(point{}),
+		"unexpoint": reflect.TypeOf(unexpoint{}),
+	},
+	InterfaceCap: 10.0,
 }
 
 func DistanceCheck(t *testing.T, l, r interface{}, expected float64) {
@@ -24,14 +30,27 @@ func DistanceCheck(t *testing.T, l, r interface{}, expected float64) {
 	}
 }
 
-type point struct {
-	X int
-	Y int
+type yer interface {
+	Y() int
 }
 
+type point struct {
+	Xf int
+	Yf int `type2vec:"0.5"`
+}
+
+func (p *point) Y() int {return p.Yf}
+
 type unexpoint struct {
-	x int 
-	y int
+	xf int 
+	yf int
+}
+
+func (p *unexpoint) Y() int {return p.yf}
+
+type object struct {
+	Name string `type2vec:"0.5"`
+	Yers []yer `type2vec:"1.0"`
 }
 
 func TestDistances(t *testing.T){
@@ -51,8 +70,8 @@ func TestDistances(t *testing.T){
 	DistanceCheck(t, float64(1), float64(22), 21.0)
 	DistanceCheck(t, complex64(2+5i), complex64(5+9i), 5.0)
 	DistanceCheck(t, complex128(2+5i), complex128(5+9i), 5.0)
-	DistanceCheck(t, []int{7, 2, 3}, []int{2}, 4.0)
-	DistanceCheck(t, point{1, 2}, point{3, 4}, 2.0*((3-1)+(4-2)))
+	DistanceCheck(t, []int{7, 2, 3}, []int{2}, 2*mc.AddElemCost)
+	DistanceCheck(t, point{1, 2}, point{3, 4}, 2.0*(3-1)+0.5*(4-2))
 	DistanceCheck(t, unexpoint{1, 2}, unexpoint{3, 4}, 0)
 	l := make(chan int, 5)
 	l <- 1 
@@ -64,4 +83,9 @@ func TestDistances(t *testing.T){
 	close(r)
 	DistanceCheck(t, l, r, 12)
 	DistanceCheck(t, "cat", "coat", 1.0)
+	DistanceCheck(t, 
+		object{"left", []yer{&point{1, 2}, &point{1, 2}}}, 
+		object{"left", []yer{&point{1, 2}, &unexpoint{1, 2}}},
+		10.0,
+	)
 }
