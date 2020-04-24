@@ -1,4 +1,4 @@
-\documentclass[twocolumn]{article}
+\documentclass{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -11,6 +11,7 @@
 \newcommand{\Rnn}{\mathbb{R}^{\ge 0}}
 \newcommand{\otw}{\text{otherwise.}}
 
+\renewcommand{\null}{\texttt{null}}
 \newcommand{\lev}[1]{\text{Lev}_{#1}}
 \newcommand{\tlist}[1]{\text{List}\quad #1}
 \newcommand{\tmap}[2]{\text{Map}\quad #1 \quad #2}
@@ -41,11 +42,14 @@ April, 2020 \\
 \input{alteration.tex}
 \subsection{From Types To Metrics}
 \input{fromTypesToMetrics.tex}
+\subsection{Some Additions}
+\subsubsection{Recursive Type Promotion}
 \section{Example: Go Code Look Up}
 \subsection{Generics}
 \section{Metric Trees}
 \input{metricTrees.tex}
 \section{Implementation}
+\input{implementation.tex}
 \section{Related Work}
 \section{Future Work}
 \subsection{Best Approximation}

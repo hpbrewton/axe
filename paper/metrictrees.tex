@@ -1,1 +1,30 @@
 Metric trees are an efficient way to search for object based on some metric.
+We will give a quicker overview of their behavior.
+
+\begin{definition}[Metric Tree]
+A metric tree is tuple $(N, X)$, where $X$ is a metric,
+and $N$ is either $nil$ or a 4-tuple $(N, r, v, N)$
+where $r \in \Rnn$, and $v$ is some vector,
+then $N$'s are defined inductively.
+\end{definition}
+
+A metric tree also has two functions related to it.
+$Index : \tlist{X} \to (N, X)$, which takes a list and converts it to a metric tree. 
+$Query : (N, X) \to \Rnn \to X \to 2^X$, which takes a metric tree, a cutoff, and a target,
+and returns all the nodes in the space closer to the target than the cutoff.
+
+$$Index(xs) = \begin{cases}
+    \null & |xs| = 0 \\
+    (\null, 0, x, \null) & xs = \{x\} \\
+    (Index(\{x \in xs' : d(x, p) \le r\}), r, x, Index(\{x \in xs' : d(x, p) > r\}) 
+    & xs = \{p\}\cup{xs'}
+\end{cases}$$
+
+$$Query(m, c, t) = \begin{cases}
+    \emptyset & m = \null \\
+    \bigcup \left. \begin{cases}
+        \{v\} & d(v, t) < c \\ 
+        Query(a, c, t) & d(v, t) < r + c \\ 
+        Query(b, c, t) & d(v, t) \ge r - c \\
+    \end{cases} \right\}& m = (a, r, v, b) \\
+\end{cases}$$
