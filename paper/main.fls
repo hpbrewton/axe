@@ -61,8 +61,12 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm1
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /Users/harrison/axe/paper/metricOverview.tex
+INPUT /Users/harrison/axe/paper/metricOverview.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /Users/harrison/axe/paper/codesearch.tex
+INPUT /Users/harrison/axe/paper/codesearch.tex
 INPUT /Users/harrison/axe/paper/levenshtein.tex
 INPUT /Users/harrison/axe/paper/levenshtein.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm

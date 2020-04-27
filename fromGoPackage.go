@@ -101,8 +101,8 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 	conv := &GoToAxeConverter {
 		Named: make(map[*types.TypeName]Type),
 	}
-	fragments := make([]*GoFragment, len(pkgScope.Names()))
-	for i, name := range pkgScope.Names() {
+	fragments := make([]*GoFragment, 0)
+	for _, name := range pkgScope.Names() {
 		var fragment GoFragment
 		object := pkgScope.Lookup(name)
 
@@ -119,10 +119,19 @@ func getTypes(pathes []string) ([]*GoFragment, error) {
 
 		// getting type
 		fragment.Typ = conv.GoTypeToAxeType(object.Type())
+		switch fragment.Typ.(type) {
+		case *MethodHaver: 
+			for field, typ := range fragment.Typ.(*MethodHaver).methods {
+				var methodFragment GoFragment
+				methodFragment.pkg = pkg 
+				methodFragment.url = fmt.Sprintf("%s/%s", fragment.url, field)
+				methodFragment.Typ = typ
+				fragments = append(fragments, &methodFragment)
+			}
+		}
 
 		// TODO get position // Or maybe not, just give name
-
-		fragments[i] = &fragment
+		fragments = append(fragments, &fragment)
 	}
 
 	return fragments, nil

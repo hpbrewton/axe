@@ -7,6 +7,7 @@ import (
 	"errors"
 	"strconv"
 	"math/cmplx"
+	"sync"
 )
 
 func toArrayEmptyInterface(ev interface{})[]interface{} {
@@ -36,7 +37,7 @@ type MetricConfig struct {
 	AddElemCost float64
 	AddElemCostChan float64
 	DefaultFieldCost float64
-	FieldMultipliers map[string]*float64
+	FieldMultipliers *sync.Map//map[string]*float64
 	InterfaceCap float64
 	Hole reflect.Type
 	HoleDistance float64
@@ -97,6 +98,7 @@ func (mc *MetricConfig) Complex128Metric(l, r interface{}) float64 {
 	return cmplx.Abs(l.(complex128) - r.(complex128))
 }
 func (mc *MetricConfig) ArrayMetric(lt, rt reflect.Type) (Metric, error) {
+	// log.Println(lt, rt)
 	lelem := lt.Elem()
 	relem := rt.Elem()
 	elemMetric, err := mc.GetMetric(lelem, relem)
@@ -152,8 +154,8 @@ func (mc *MetricConfig) StructMetric(lt, rt reflect.Type) (Metric, error) {
 			// set field identifiers if not present, otw get it 
 			identifier := fmt.Sprintf("%s/%s", structField.Name, lt.PkgPath())
 			var multipler float64
-			if val, ok := mc.FieldMultipliers[identifier]; ok {
-				multipler = *val 
+			if val, ok := mc.FieldMultipliers.Load(identifier); ok {
+				multipler = *(val.(*float64))
 			} else {
 				field := tag.Get("type2vec")
 				foundMultiplier, err := strconv.ParseFloat(field, 64)
@@ -162,7 +164,7 @@ func (mc *MetricConfig) StructMetric(lt, rt reflect.Type) (Metric, error) {
 				} else {
 					multipler = foundMultiplier
 				}
-				mc.FieldMultipliers[identifier] = &multipler
+				mc.FieldMultipliers.Store(identifier, &multipler)
 			}
 			
 			d := metric(lo.Field(i).Interface(), ro.Field(i).Interface())

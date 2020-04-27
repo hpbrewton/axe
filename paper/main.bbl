@@ -1,5 +1,19 @@
 \begin{thebibliography}{1}
 
+\bibitem{chen}
+Ivan Chen.
+\newblock Vptree.
+
+\bibitem{cox}
+Russ Cox.
+\newblock Regular expression matching with a trigram index or how google code
+  search worked.
+
+\bibitem{mitchell:hoogle_16_may_2011}
+Neil Mitchell.
+\newblock Hoogle: Finding functions from types, May 2011.
+\newblock Presentation from TFP 2011.
+
 \bibitem{wiki:levenshtein}
 {Wikipedia contributors}.
 \newblock levenshtein distance, 2020.

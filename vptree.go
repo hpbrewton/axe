@@ -89,8 +89,20 @@ func NewVPTree(data []int, metric func(int, int)float64) *VPTree {
 
 	split := len(data)/2
 	radius := metric(pivot, data[split-1])
-	left := NewVPTree(data[1:split], metric)
-	right := NewVPTree(data[split:], metric)
+	sides := make(chan bool, 2)
+	var left *VPTree 
+	var right *VPTree
+	go func(){
+		left = NewVPTree(data[1:split], metric)
+		sides <- true 
+	}()
+	go func(){
+		right = NewVPTree(data[split:], metric)
+		sides <- true 
+	}()
+	for i := 0; i < 2; i++ {
+		<-sides 
+	}
 	return &VPTree{
 		position: pivot,
 		radius: radius,
