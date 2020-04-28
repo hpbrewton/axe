@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -7,6 +7,7 @@
 
 \usepackage{cite}
 
+\newcommand{\fT}{\mathcal{T}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rnn}{\mathbb{R}^{\ge 0}}
 \newcommand{\otw}{\text{otherwise.}}
@@ -19,6 +20,8 @@
 \newcommand{\head}[1]{#1[0]}
 
 \newtheorem{definition}{Definition}
+\theoremstyle{plain}
+\newtheorem{example}{Example}
 
 \begin{document}
 {\centering \Huge \textbf{A Code Search Engine for Go} \\ 
@@ -32,11 +35,20 @@ April, 2020 \\
 }
 \input{abstract.tex}
 \section{Background}
+\subsection{Metric}
 \input{metricOverview.tex}
 \subsection{Code Search}
 \input{codesearch.tex}
-\section{Overview}
+\subsection{Implementation and Evaluation}
+\input{implementationIntro.tex}
+\subsection{Contributions}
+\input{contributions.tex}
+\section{Example}
+\input{examplesIntro.tex}
+\subsection{Example}
+\input{example.tex}
 \section{Type2Metric}
+\input{typeToMetricProblem.tex}
 \subsection{Levenshtein Combinator}
 \input{levenshtein.tex}
 \subsection{Linear Combinator}

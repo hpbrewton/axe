@@ -1,3 +1,20 @@
+\begin{example}[Levenshtein Combinator]
+    Suppose we have two lists $[1, 2, 1, 1]$ and $[1, 3, 2]$.
+    We want to find the distance between these two lists. 
+    This is a somewhat ill defined question,
+    but we can divine a reasonable approach to this question.
+    We can ask what is the minimum cost to change the first list into the second list.
+    Cost, for this example, can be defined as the fewest insertions, substitutions, and removals required to convert between the two lists.
+    There are two things to note here, first different substitutions are more expensive than others,
+    for example $1000 \mapsto 1$ is definitely more expensive thant $2 \mapsto 1$.
+    For simplicity, we will say a substiution is as expenensive as the difference between the two numbers are.
+    With this in mind we can set a substitution or removal to have some finite cost. Why not $3$?
+    We choose this number somewhat flippantly, but there is a bit of an art to it.
+    It's worth noting that this constant sets an upper limit to the substitution cost.
+    This is because any substitution can be achieved with an insertion and a deletion.
+    So, in this particular example the substitution between any two numbers is really the minimum of there difference and $6$ (the cost of a deletion followed by an insertion).
+\end{example}
+
 The Levenshtein edit distance is a commonly used metric for strings.
 It gives the number of substitutions, deletions, or additions to edit one string into another string \cite{wiki:levenshtein}.
 It is well known that the normal Levenshtein distance on strings satifies the properties of a metric.
