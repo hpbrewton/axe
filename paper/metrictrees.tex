@@ -1,30 +1,66 @@
 Metric trees are an efficient way to search for object based on some metric.
-We will give a quicker overview of their behavior.
+We will give a quicker overview of our implementation of a VP-Tree\footnote{VP-Tree stands for vantage point tree} \cite{j2kun_2014},
+a particular favor of metric tree that is convient because of its not dependence on the dimensionality of a vector space.
+This is useful because it allows for metric spaces with no dimension such as that of type signatures.
 
-\begin{definition}[Metric Tree]
-A metric tree is tuple $(N, X)$, where $X$ is a metric,
-and $N$ is either $nil$ or a 4-tuple $(N, r, v, N)$
-where $r \in \Rnn$, and $v$ is some vector,
-then $N$'s are defined inductively.
-\end{definition}
+The goal of a metric tree is to take some point $p$, and some radius, and return all the points that are within the radius away from $p$.
+The point $p$ and the radius can together be thought of as a ball, and the goal of a metric tree is to return all the points in the metric space 
+    that reside in that ball.
+The idea of the VP-Tree is split the metric space recursively into interiors and exteriors.
+An interior is a metric ball, that is a point in the space with some radius.
+An exterior is just the complement of some interior.
+By splitting a space up this way, 
+we can save ourselves a substatinal amount of effort by only search the interior if the target ball intersects the interior,
+and only searching the exteriors if the target ball extends beyond an interiors.
+A VP-Tree is defined as a reursive data type parameterized over the type of the metric, denoted $X$ here:
 
-A metric tree also has two functions related to it.
-$Index : \tlist{X} \to (N, X)$, which takes a list and converts it to a metric tree. 
-$Query : (N, X) \to \Rnn \to X \to 2^X$, which takes a metric tree, a cutoff, and a target,
-and returns all the nodes in the space closer to the target than the cutoff.
+\begin{align*}
+\text{VP-Tree } X &= \{ \\ 
+interior &: \text{VP-Tree } X, \\ 
+exterior &: \text{VP-Tree } X, \\ 
+self &: X, \\ 
+radius &: \Rnn \\
+\}
+\end{align*}
 
-$$Index(xs) = \begin{cases}
-    \null & |xs| = 0 \\
-    (\null, 0, x, \null) & xs = \{x\} \\
-    (Index(\{x \in xs' : d(x, p) \le r\}), r, x, Index(\{x \in xs' : d(x, p) > r\}) 
-    & xs = \{p\}\cup{xs'}
-\end{cases}$$
+In this definition we note a $\text{VP-Tree } X$ can be $\null$
 
-$$Query(m, c, t) = \begin{cases}
-    \emptyset & m = \null \\
-    \bigcup \left. \begin{cases}
-        \{v\} & d(v, t) < c \\ 
-        Query(a, c, t) & d(v, t) < r + c \\ 
-        Query(b, c, t) & d(v, t) \ge r - c \\
-    \end{cases} \right\}& m = (a, r, v, b) \\
-\end{cases}$$
+To aid in understanding it is worth noting the similarity between a VP-Tree and normal binary search tree.
+In a normal binary search tree,
+if we were to do a range query,
+we explore the left child of a node if the node's value is within our range,
+and same with the right child.
+As discussed before,
+in a VP-Tree we search the interior child of a node $n$ if our target ball intersects the ball $(n.self, n.radius)$,
+and we search the exterior child of a node $n$ if our target ball is at all outside the ball $(n.self, n.radius)$.
+We formalize this with the below method:
+
+\begin{align*}
+query(v : VP-Tree X, target : X, cutoff : \Rnn) \to 2^X = \\ \begin{cases}
+    \emptyset & v = \null \\ 
+    \bigcup \left.\begin{cases}
+        query(v.interior) & d_X(v.self, target) \le v.radius + cutoff \\ 
+        query(v.exterior) & d_X(v.self, target) > v.radius - cutoff \\ 
+        \{v.self\} & d_X(v.self, target) < cutoff
+    \end{cases}\right\} & \otw 
+\end{cases}
+\end{align*}
+
+Now, in order to use this data structure we need to first construct it.
+To do this we follow a similar to path to that of quick sort.
+We will choose a random point, and we will find the distance from it to all other points.
+We will then partition the points by those closer to median and further than the median.
+Those closer than the median will form the interior and those further than the median will form the exterior of a VP-Tree.
+We then create a VP-Tree node by setting its self to the random point, interior and exterior as above, 
+and radius as distance to the median. 
+We will formalize this with the below function.
+As a ease of notation, let $\mradius{S}$ simpliy be an approximate the distance from the random point to the 
+median of $S$ found with arbitrary percision in linear time\footnote{this can be done with median of medians approach}.
+
+\begin{align*}
+index(\{random\} \cup rest: 2^X) \to VP-Tree X = \\ 
+\text{VPTree}\{interior&:index(\{x \in rest : d_X(x, random) < \mradius{S}\}), \\
+exterior&:index(\{x \in rest : d_X(x, random) \ge \mradius{S}, \}),\\ 
+self&:random,\\
+radius&:\mradius{S}\}
+\end{align*}
