@@ -1,0 +1,9 @@
+Using types for search has been an idea for a long time \cite{ReusablePolyType,TypeAsKey},
+though these early methods often went through the process of doing a full unification and only returning those functions which perfectly unify with the query.
+Hoogle \cite{hoogle} is a widely used search engine for Haskell functions.
+For a while it used this pure unification strategy.
+Sincer version 5, it has moved to ad-hoc search.
+It essentially does random edits on the query, each edit with a particular cost,
+and it then lists types based on the number of edits required to move from type to another type.
+This was a large improvement in query quality over previous results as it allows users to enter imperfect types.
+However, because it uses this adhoc approach it still requires linear time to the search.

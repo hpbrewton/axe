@@ -23,4 +23,22 @@ Neil Mitchell.
 Jeremy Kun.
 \newblock Metrics on words, May 2014.
 
+\bibitem{ReusablePolyType}
+Colin Runciman and Ian Toyn.
+\newblock Retrieving re-usable software components by polymorphic type.
+\newblock In {\em Proceedings of the Fourth International Conference on
+  Functional Programming Languages and Computer Architecture}, FPCA ’89, page
+  166–173, New York, NY, USA, 1989. Association for Computing Machinery.
+
+\bibitem{TypeAsKey}
+Mikael Rittri.
+\newblock Using types as search keys in function libraries.
+\newblock In {\em Proceedings of the Fourth International Conference on
+  Functional Programming Languages and Computer Architecture}, FPCA ’89, page
+  174–183, New York, NY, USA, 1989. Association for Computing Machinery.
+
+\bibitem{hoogle}
+Neil Mitchell.
+\newblock Hoogle.
+
 \end{thebibliography}
