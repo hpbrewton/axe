@@ -1,3 +1,19 @@
+Sum types appear rather often.
+As a simple example, consider an option type where a value might be present and have some value 
+or might not be present and thus have no value.
+How might we define a metric for two objects of this type.
+Well if both of the objects have values present, then we can simply use the metric for their values (assuming they exist).
+If niether exist, then the two objects are exactly the same, and so should have zero distance.
+However, what do we do if one exists and the other does not.
+One option, and the one taken here, is to simply give them some fixed value.
+This choice is clean, but does pin us in a bit.
+Consider what happens if the distance between two present values is greater than twice this constant.
+We would have broken our metric definition by allowing a shorter route from the first object through an objects of a different type in the alteration
+back to the second than the given route between the two objects.
+So we revise earlier, and say that the distance between objects of the same type in the alternation is the min of their types metric result 
+and the change type constant. 
+We formalize this below.
+
 Suppose that we have a tuple $(n, v)$, where $n$ is some natural number less than some $N$,
 and a mapping $f : n \to (v \times v \to \R)$.
 Then we can define the alteration combinator on these tuples.

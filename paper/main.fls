@@ -100,6 +100,7 @@ INPUT /Users/harrison/axe/paper/alteration.tex
 INPUT /Users/harrison/axe/paper/alteration.tex
 INPUT /Users/harrison/axe/paper/fromTypesToMetrics.tex
 INPUT /Users/harrison/axe/paper/fromTypesToMetrics.tex
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
 INPUT /Users/harrison/axe/paper/metricTrees.tex
@@ -112,7 +113,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
-INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /Users/harrison/axe/paper/implementation.tex
@@ -121,6 +121,8 @@ INPUT /Users/harrison/axe/paper/hoogle.tex
 INPUT /Users/harrison/axe/paper/hoogle.tex
 INPUT /Users/harrison/axe/paper/relatedWork.tex
 INPUT /Users/harrison/axe/paper/relatedWork.tex
+INPUT /Users/harrison/axe/paper/bestApproximation.tex
+INPUT /Users/harrison/axe/paper/bestApproximation.tex
 INPUT /Users/harrison/axe/paper/conclusion.tex
 INPUT /Users/harrison/axe/paper/conclusion.tex
 INPUT /Users/harrison/axe/paper/main.bbl

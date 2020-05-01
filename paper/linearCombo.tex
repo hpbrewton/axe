@@ -1,6 +1,16 @@
+We may want to use multiple definitions of distance between some object.
+A simple example is finding the taxi cab distance between two points.
+Which is the sum of the distances between two points along any finite number of axes.
+We may also want to weigh different distances different values.
+This is reasonable if we consider the taxi cab analogy where blcoks might be longer north-south 
+than they are east-west.
+We can apply this idea generally to any product type,
+where we want to define the metric of that type as a linear combination of the metrics of each of the fields.
+
 We will now briefly show that the linear combination of metrics is a metric.
-Suppose we have a metric $d(a, b) = \sum c_id_i(a, b)$, 
+Suppose we have a possible metric $d(a, b) = \sum c_id_i(a, b)$, 
 where $c_i$ is a positive real number, and $d_i$ is a metric.
 Symmetry follows clearly.
 Identity of indescernables follows as each term goes to zero, leaving the sum at zero.
 The triangle ineqaulity follows $d(a, b) = \sum c_id_i(a, b) \le \sum c_id_i(a, c)+c_id_i(a, b) = d(a, c) + d(b, c)$.
+Thus, we can safely take a linear combination of metrics and arrive still at a metric.
