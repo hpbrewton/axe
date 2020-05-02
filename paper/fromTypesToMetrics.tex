@@ -42,6 +42,6 @@ We have implemented these rules in a tool called type to metric which we will di
 \\ 
 \inferrule*[Right=Number]{\Gamma \vdash x, y: T \\ \Gamma T <: \text{Number}}{d(x, y) = |y-x|}
 \end{mathpar}
-\caption{Rules for converting types to metrics}
+\caption{Rules for converting types to metrics. The \const function simply provides a user provided (or default) cost for various alterations and products/}
 \label{rules}
 \end{figure}
