@@ -151,6 +151,10 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
 INPUT /Users/harrison/axe/paper/implementation.tex
 INPUT /Users/harrison/axe/paper/implementation.tex
+INPUT /Users/harrison/axe/paper/experimentalSetup.tex
+INPUT /Users/harrison/axe/paper/experimentalSetup.tex
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /Users/harrison/axe/paper/evaluate.tex
 INPUT /Users/harrison/axe/paper/evaluate.tex
 INPUT /Users/harrison/axe/paper/example1.png
@@ -159,6 +163,9 @@ INPUT /Users/harrison/axe/paper/example1.png
 INPUT /Users/harrison/axe/paper/example6.png
 INPUT /Users/harrison/axe/paper/example6.png
 INPUT /Users/harrison/axe/paper/example6.png
+INPUT /Users/harrison/axe/paper/alldat.png
+INPUT /Users/harrison/axe/paper/alldat.png
+INPUT /Users/harrison/axe/paper/alldat.png
 INPUT /Users/harrison/axe/paper/hoogle.tex
 INPUT /Users/harrison/axe/paper/hoogle.tex
 INPUT /Users/harrison/axe/paper/googleCodeSearch.tex

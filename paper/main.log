@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  2 MAY 2020 15:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  3 MAY 2020 09:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -265,31 +265,50 @@ Overfull \hbox (31.31102pt too wide) detected at line 66
 []
  []
 
-) (/Users/harrison/axe/paper/implementation.tex) (/Users/harrison/axe/paper/evaluate.tex
-<example1.png, id=44, 963.6pt x 1059.96pt>
+) (/Users/harrison/axe/paper/implementation.tex) (/Users/harrison/axe/paper/experimentalSetup.tex
+
+LaTeX Warning: Reference `dist1plot,dist6plot' on page 9 undefined on input line 16.
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 28.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 28.
+ [9]) (/Users/harrison/axe/paper/evaluate.tex
+<example1.png, id=47, 963.6pt x 1059.96pt>
 File: example1.png Graphic file (type png)
 <use example1.png>
-Package pdftex.def Info: example1.png  used on input line 3.
+Package pdftex.def Info: example1.png  used on input line 35.
 (pdftex.def)             Requested size: 469.75502pt x 516.73247pt.
-<example6.png, id=45, 963.6pt x 1059.96pt>
+<example6.png, id=48, 963.6pt x 1059.96pt>
 File: example6.png Graphic file (type png)
 <use example6.png>
-Package pdftex.def Info: example6.png  used on input line 13.
+Package pdftex.def Info: example6.png  used on input line 45.
 (pdftex.def)             Requested size: 469.75502pt x 516.73247pt.
-) (/Users/harrison/axe/paper/hoogle.tex) (/Users/harrison/axe/paper/googleCodeSearch.tex) [9] [10 </Users/harrison/axe/paper/example1.png (PNG copy)>] [11 </Users/harrison/axe/paper/example6.png (PNG copy)>] (/Users/harrison/axe/paper/2vecs.tex) (/Users/harrison/axe/paper/bestApproximation.tex) (/Users/harrison/axe/paper/conclusion.tex) (/Users/harrison/axe/paper/main.bbl [12]) [13] (/Users/harrison/axe/paper/main.aux) ) 
+<alldat.png, id=49, 1071.00125pt x 1071.00125pt>
+File: alldat.png Graphic file (type png)
+<use alldat.png>
+Package pdftex.def Info: alldat.png  used on input line 55.
+(pdftex.def)             Requested size: 234.8775pt x 234.86926pt.
+) (/Users/harrison/axe/paper/hoogle.tex) [10] [11 </Users/harrison/axe/paper/example1.png (PNG copy)>] [12 </Users/harrison/axe/paper/example6.png (PNG copy)>] (/Users/harrison/axe/paper/googleCodeSearch.tex) (/Users/harrison/axe/paper/2vecs.tex) [13 </Users/harrison/axe/paper/alldat.png (PNG copy)>] (/Users/harrison/axe/paper/bestApproximation.tex) (/Users/harrison/axe/paper/conclusion.tex) (/Users/harrison/axe/paper/main.bbl [14]) [15] (/Users/harrison/axe/paper/main.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3295 strings out of 492616
- 45921 string characters out of 6129482
- 120209 words of memory out of 5000000
- 7096 multiletter control sequences out of 15000+600000
+ 3322 strings out of 492616
+ 46433 string characters out of 6129482
+ 120230 words of memory out of 5000000
+ 7116 multiletter control sequences out of 15000+600000
  14262 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,21n,32p,440b,293s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on /Users/harrison/axe/paper/main.pdf (13 pages, 420663 bytes).
+Output written on /Users/harrison/axe/paper/main.pdf (15 pages, 448224 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 120 PDF objects out of 1000 (max. 8388607)
+ 83 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
