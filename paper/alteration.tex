@@ -1,9 +1,9 @@
 Sum types appear rather often.
 As a simple example, consider an option type where a value might be present and have some value 
 or might not be present and thus have no value.
-How might we define a metric for two objects of this type.
+How might we define a metric for two objects of this type?
 Well if both of the objects have values present, then we can simply use the metric for their values (assuming they exist).
-If niether exist, then the two objects are exactly the same, and so should have zero distance.
+If neither exist, then the two objects are exactly the same, and so should have zero distance.
 However, what do we do if one exists and the other does not.
 One option, and the one taken here, is to simply give them some fixed value.
 This choice is clean, but does pin us in a bit.
@@ -30,7 +30,7 @@ $$ Alt(f, ((e_1, v_1), (e_2, v_2))) = \begin{cases}
 \end{cases}$$
 \end{definition}
 
-Symmetry, and identity of indiscernables is pretty straightforward.
+Symmetry, and identity of indiscernibles is pretty straightforward.
 The triangle inequality for $Alt(f)$, is a little trickier.
 We consider four cases. 
 Let $A$, $B$, and $C$ all be in $E$.

@@ -2,9 +2,9 @@ Creating indexes to aid search through structured data is a finicky business,
 and it is especially hard to make these indexes achieve sub-polynomial search time.
 This paper looks into problem of automatically creating an index for arbitrary user defined data types.
 It details a procedure for the creation of a metric from data types.
-It the shows how to use this metric to create an index that provides $O(\log(n))$ bounded search.
-The modularity of this system allowed the creation of module \textit{type2met},
+It then shows how to use this metric to create an index that provides $O(\log(n))$ bounded search.
+The modularity of this system allowed the creation of a package \textit{type2met},
 which automatically creates metrics from given types.
 We then use this module to create a fast search engine for Go functions based on their signature.
-We demonstrate its use on a number of popular Go modules.
-We conclude with future work.
+We demonstrate its use on a number of packages from the Go standard library,
+showing that we get good search results and we get strong speed up over linear search.

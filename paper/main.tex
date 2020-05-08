@@ -12,6 +12,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Rnn}{\mathbb{R}^{\ge 0}}
 \newcommand{\otw}{\text{otherwise.}}
+\newcommand{\bfloat}{F_{64}}
 
 \renewcommand{\null}{\texttt{null}}
 \newcommand{\pointer}[1]{\ast(#1)}
@@ -32,9 +33,7 @@
 \Large
 Harrison Brewton \\
 Advised by Aws Albarghouthi \\ 
-April, 2020 \\
-\normalsize
-\vspace{0.1cm} \textit{``All programming language proofs are by induction''} \vspace{0.1cm} \par
+May, 2020 \\
 }
 \input{abstract.tex}
 \section{Background}
@@ -60,11 +59,9 @@ April, 2020 \\
 \input{alteration.tex}
 \subsection{From Types To Metrics}
 \input{fromTypesToMetrics.tex}
-\subsection{Some Additions}
-\subsubsection{Recursive Type Promotion}
-\section{Example: Go Code Look Up}
-\subsection{Generics}
-\section{Metric Trees}
+\subsection{Example: Go Code Look Up}
+\input{axe.tex}
+\subsubsection{Metric Trees}
 \input{metricTrees.tex}
 \section{Implementation}
 \input{implementation.tex}
@@ -72,6 +69,7 @@ April, 2020 \\
 \input{experimentalSetup.tex}
 \subsection{Evaluate}
 \subsubsection{Adequate Results}
+\input{results.tex}
 \subsubsection{Performance}
 \input{evaluate.tex}
 \section{Related Work}

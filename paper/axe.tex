@@ -1,0 +1,16 @@
+In order to test our conversion technique we applied the converter to Go type signatures
+and then created an index over this data.
+Go type signatures create a recursive type, a fragment of which we provide here for understanding:
+
+\begin{align*}
+\fT &= \text{Primative} \\ 
+&| \text{Slice } \fT \\ 
+&| \text{Channel } \fT \\ 
+&| \text{Map } \fT \quad \fT \\
+&| \text{Tuple } (\tlist{\fT}) \\
+&| \text{Function } (\tlist{\fT}) (\tlist{\fT}) 
+\end{align*}
+
+We can then simply apply our converter to this datatructure to create a metric.
+We can then use this metric, and metric trees (which are discussed) below to create Axe,
+a prototype go search engine.

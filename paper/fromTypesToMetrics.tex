@@ -3,17 +3,17 @@
 
 In Figure \ref{rules} we provide a formalization of rules for generating a metric from a type.
 They are largely the same as discussed in the previous subsections, but they have two additions which are worht noting.
-First, we haved added maps, a common language type. 
+First, we have added maps, a common language type. 
 Largely, these are treated like lists;
 however to do so we first have to convert them to lists of sorted pairs of keys and values and then we sort them by their key element.
-At this point we simply plug them into the levenshtein distance.
+At this point we simply plug them into the Levenshtein distance.
 Second, we have added pointers.
 These just behave as wrappers of their types.
 While we are able to prevent some types of pointer cycles by testing if pointers are equal,
 this will not terminate for all objects such as two linked lists with one element missing.
 More work needs to be done to resolve this.
 
-There is a cheap proof that needs to be made where we show that all of the distance fucntions created here are in fact metrics.
+There is a cheap proof that needs to be made where we show that all of the distance functions created here are in fact metrics.
 As a base case, it is clear that numbers are metrics.
 We have sufficiently shown that all other combinations are metrics in the previous.
 So, by induction these are all metrics.
@@ -42,6 +42,7 @@ We have implemented these rules in a tool called type to metric which we will di
 \\ 
 \inferrule*[Right=Number]{\Gamma \vdash x, y: T \\ \Gamma T <: \text{Number}}{d(x, y) = |y-x|}
 \end{mathpar}
-\caption{Rules for converting types to metrics. The \const function simply provides a user provided (or default) cost for various alterations and products/}
+\caption{Rules for converting types to metrics. The \const function simply provides a user provided (or default) cost for various alterations and products.
+$d(\cdot, \cdot)$ gives us a distance between two objects, and $d_T$ is a metric for some object of type $T$.}
 \label{rules}
 \end{figure}

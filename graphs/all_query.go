@@ -20,7 +20,7 @@ type TestResult struct {
 var cutoffs = []float64{0.000001, 1, 2, 3, 5, 10, 100, 1000}
 
 func main() {
-	file, err := os.Open("all.dat")
+	file, err := os.Open("all2.dat")
 	if err != nil {
 		panic(err)
 	}

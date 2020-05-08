@@ -6,14 +6,14 @@ Metrics can be formalized simply:
 
 \begin{definition}[Metric]
 Let $(X, d)$ space, such that $d: X \times X \to \Rnn$. 
-Then $d$ forms a metric over $X$ if three proprties hold:
-symmetry or $d(a, b) = d(b, a)$, identity of indescernables or $d(a, b) = 0 \iff a = b$,
+Then $d$ forms a metric over $X$ if three properties hold:
+symmetry or $d(a, b) = d(b, a)$, identity of indiscernibles or $d(a, b) = 0 \iff a = b$,
 and sub-additivity $d(a, b) \le d(a, c) + d(c, b)$ for all $c$.
 \end{definition}
 
 Because of this, they are often used for searching for the nearest objects to some query.
-They've been used for image processing, computational biology, computer vision, mealody search, amongst others \cite{chen}.
-While useful metrics for particular problem spaces can be difficult to create especially when dealing with complicated data types commonly found
+They've been used for image processing, computational biology, computer vision, melody search, amongst others \cite{chen}.
+While useful, metrics for particular problem spaces can be difficult to create especially when dealing with complicated data types commonly found
 in modern databases.
 The first goal of this paper is to provide an automatic mechanism which allows a user to provide a type definition,
 and from this definition produce a metric which allow the user to compute similarity.

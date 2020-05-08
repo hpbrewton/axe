@@ -84,25 +84,15 @@ func NewVPTree(data []int, metric func(int, int)float64) *VPTree {
 
 	pivot := data[0]
 	sort.Slice(data[1:], func(i, j int) bool{
-		return metric(pivot, data[i]) < metric(pivot, data[j])
+		return metric(pivot, data[i+1]) < metric(pivot, data[j+1])
 	})
 
 	split := len(data)/2
 	radius := metric(pivot, data[split-1])
-	sides := make(chan bool, 2)
 	var left *VPTree 
 	var right *VPTree
-	go func(){
-		left = NewVPTree(data[1:split], metric)
-		sides <- true 
-	}()
-	go func(){
-		right = NewVPTree(data[split:], metric)
-		sides <- true 
-	}()
-	for i := 0; i < 2; i++ {
-		<-sides 
-	}
+	left = NewVPTree(data[1:split], metric)
+	right = NewVPTree(data[split:], metric)
 	return &VPTree{
 		position: pivot,
 		radius: radius,

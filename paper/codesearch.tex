@@ -1,12 +1,12 @@
-Code reuse has long been the dream of tool designers.
+Code reuse has long been a goal for tool designers.
 It allows engineers to collectively work on performance, security, robustness, and further reuse.
-One part of code reuse is being able to search through a large code base and find functions that have already written.
+One part of code reuse is being able to search through a large code base and find functions that have already been created.
 Previous work \cite{cox} has looked as using raw source code.
-Other work \cite{mitchell:hoogle_16_may_2011} has instead used an adhoc rewriting scheme to find the difference between pieces of code,
+Other work \cite{mitchell:hoogle_16_may_2011} has instead used an ad-hoc rewriting scheme to find the difference between pieces of code,
 requiring linear time to search through the code.
 Our second goal is to create a code search engine for Go.
 We use the aforementioned metric generation to create a metric on type signatures,
 then we can use this metric to create an efficient data structure for search.
-This data structure both provides the logarithimic search complexity of \cite{cox} but with the richer type information of \cite{mitchell:hoogle_16_may_2011}.
+This data structure both provides the logarithmic search complexity of \cite{cox} but with the richer type information of \cite{mitchell:hoogle_16_may_2011}.
 We implement this search engine in a tool called Axe.
 

@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
-	// "encoding/json"
+	"encoding/json"
 	// "runtime/debug"
 )
 
@@ -94,13 +94,14 @@ func main() {
 	// 	panic(err)
 	// }
 
-	dirsOfInterest := directoriesOfInterest()
-	frags := make([]*GoFragment, 0)
-	for _, directory := range dirsOfInterest {
-		frags = append(fragments(directory), frags...)
-	}
+	// dirsOfInterest := directoriesOfInterest()
+	// frags := make([]*GoFragment, 0)
+	// for _, directory := range dirsOfInterest {
+	// 	frags = append(fragments(directory), frags...)
+	// }
 
 	// vpt, indexns := mkVPTree(fragMetric, frags)
+
 	// data := make([]int64, 0)
 	// queries := make([]*GoFragment, nrepeat)
 	// for i, _ := range queries {
@@ -140,54 +141,54 @@ func main() {
 	// }
 	// os.Stdout.Write(jsonResult)
 
-	// fragType := reflect.TypeOf(&GoFragment{})
-	// fragMetric, err := mc.GetMetric(fragType, fragType)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// for _, directory := range directoriesOfInterest() {
-	// 	frags := fragments(directory)
-	// 	if len(frags) == 0 {
-	// 		continue
-	// 	}
-	// 	vpt, indexns := mkVPTree(fragMetric, frags)
-	// 	data := make([]int64, 0)
-	// 	queries := make([]*GoFragment, nrepeat)
-	// 	for i, _ := range queries {
-	// 		queries[i] = frags[rando.Intn(len(frags))]
-	// 	}
-	// 	for _, cutoff := range []float64{0, 1, 2, 3, 5, 10, 100, 1000} {
-	// 		if err != nil {
-	// 			continue
-	// 		}
-	// 		avg := int64(0)
-	// 		for i := 0; i < nrepeat; i++ {
-	// 			query := queries[i]
-	// 			looker := func(a int) float64{
-	// 				return fragMetric(query, frags[a])
-	// 			}
-	// 			sum := int64(0)
-	// 			for j := 0; j < 10; j++ {
-	// 				start := time.Now()
-	// 				vpt.Lookup(looker, j, cutoff)
-	// 				sum += time.Now().Sub(start).Nanoseconds()
-	// 			}
-	// 			sum /= 10
-	// 			avg += sum
-	// 		}
-	// 		avg /= int64(nrepeat)
-	// 		data = append(data, avg)
-	// 	}
-	// 	testResult := TestResult{
-	// 		Dir: directory,
-	// 		Nfrags: len(frags),
-	// 		IndexNS: indexns,
-	// 		DataNS: data,
-	// 	}
-	// 	jsonResult, err := json.Marshal(testResult)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// 	os.Stdout.Write(jsonResult)
-	// }
+	fragType := reflect.TypeOf(&GoFragment{})
+	fragMetric, err := mc.GetMetric(fragType, fragType)
+	if err != nil {
+		panic(err)
+	}
+	for _, directory := range directoriesOfInterest() {
+		frags := fragments(directory)
+		if len(frags) == 0 {
+			continue
+		}
+		vpt, indexns := mkVPTree(fragMetric, frags)
+		data := make([]int64, 0)
+		queries := make([]*GoFragment, nrepeat)
+		for i, _ := range queries {
+			queries[i] = frags[rando.Intn(len(frags))]
+		}
+		for _, cutoff := range []float64{0, 1, 2, 3, 5, 10, 100, 1000} {
+			if err != nil {
+				continue
+			}
+			avg := int64(0)
+			for i := 0; i < nrepeat; i++ {
+				query := queries[i]
+				looker := func(a int) float64{
+					return fragMetric(query, frags[a])
+				}
+				sum := int64(0)
+				for j := 0; j < 10; j++ {
+					start := time.Now()
+					vpt.Lookup(looker, j, cutoff)
+					sum += time.Now().Sub(start).Nanoseconds()
+				}
+				sum /= 10
+				avg += sum
+			}
+			avg /= int64(nrepeat)
+			data = append(data, avg)
+		}
+		testResult := TestResult{
+			Dir: directory,
+			Nfrags: len(frags),
+			IndexNS: indexns,
+			DataNS: data,
+		}
+		jsonResult, err := json.Marshal(testResult)
+		if err != nil {
+			panic(err)
+		}
+		os.Stdout.Write(jsonResult)
+	}
 }

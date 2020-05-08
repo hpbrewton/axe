@@ -1,18 +1,18 @@
 Metric trees are an efficient way to search for object based on some metric.
 We will give a quicker overview of our implementation of a VP-Tree\footnote{VP-Tree stands for vantage point tree} \cite{j2kun_2014},
-a particular favor of metric tree that is convient because of its not dependence on the dimensionality of a vector space.
+a particular favor of metric tree that is convenient because of its not dependence on the dimensionality of a vector space.
 This is useful because it allows for metric spaces with no dimension such as that of type signatures.
 
 The goal of a metric tree is to take some point $p$, and some radius, and return all the points that are within the radius away from $p$.
-The point $p$ and the radius can together be thought of as a ball, and the goal of a metric tree is to return all the points in the metric space 
+The point $p$ and the radius can together be thought of as a target ball, and the goal of a metric tree is then to return all the points in the metric space 
     that reside in that ball.
 The idea of the VP-Tree is split the metric space recursively into interiors and exteriors.
 An interior is a metric ball, that is a point in the space with some radius.
 An exterior is just the complement of some interior.
 By splitting a space up this way, 
-we can save ourselves a substatinal amount of effort by only search the interior if the target ball intersects the interior,
+we can save ourselves a substantial amount of effort by only search the interior if the target ball intersects the interior,
 and only searching the exteriors if the target ball extends beyond an interiors.
-A VP-Tree is defined as a reursive data type parameterized over the type of the metric, denoted $X$ here:
+A VP-Tree is defined as a recursive data type parameterized over the type of the metric, denoted $X$ here:
 
 \begin{align*}
 \text{VP-Tree } X &= \{ \\ 
@@ -54,8 +54,8 @@ Those closer than the median will form the interior and those further than the m
 We then create a VP-Tree node by setting its self to the random point, interior and exterior as above, 
 and radius as distance to the median. 
 We will formalize this with the below function.
-As a ease of notation, let $\mradius{S}$ simpliy be an approximate the distance from the random point to the 
-median of $S$ found with arbitrary percision in linear time\footnote{this can be done with median of medians approach}.
+As a ease of notation, let $\mradius{S}$ simply be an approximate the distance from the random point to the 
+median of $S$ found with arbitrary precision in linear time\footnote{this can be done with median of medians approach}.
 
 \begin{align*}
 index(\{random\} \cup rest: 2^X) \to VP-Tree X = \\ 

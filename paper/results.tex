@@ -1,0 +1,29 @@
+One question we have is does search even work?
+That is, if we query do we actually get reasonable results?
+There are not yet great ways to evaluate search appropriateness
+Especially when evaluating type search, a new feature to Go.
+That said, we present the following argument:
+a query gives a good result.
+So, a query that we ran was for all types matching.
+$\bfloat$ represents a 64-bit floating point and $??$
+a hole that matches all types.
+This query seems like a reasonable query if we consider a Developer who wants 
+to possible raise some number to a power
+$$(\bfloat, ??) \to \bfloat$$
+
+We get the following results:
+\begin{itemize}
+    \item $\textbf{math/Max} : (\bfloat, \bfloat) \to \bfloat$ takes the max of two numbers  \\
+    \item $\textbf{math/Ldexp} : (\bfloat, \mathbb{Z} \to \bfloat)$ multiples the first argument by two the power of the second   \\
+    \item $\textbf{math/Dim} : (\bfloat, \bfloat) \to \bfloat$ takes the max of the difference of the two numbers and zero  \\
+    \item $\textbf{math/Mod} : (\bfloat, \bfloat) \to \bfloat$ takes the floating-point remainder of $x/y$ \\
+    \item $\textbf{math/Min} : (\bfloat, \bfloat) \to \bfloat$ takes the min of two numbers  \\
+    \item $\textbf{math/Nextafter} : (\bfloat, \bfloat) \to \bfloat$ returns the next floating point after the first argument in the direction of the second. \\
+    \item $\textbf{math/Pow} : (\bfloat, \bfloat) \to \bfloat$ returns the first argument raised to the second  \\
+    \item $\textbf{math/Remainder} : (\bfloat, \bfloat) \to \bfloat$ returns the IEEE 754 floating-point remainder of x/y \\
+    \item $\textbf{math/Hypot} : (\bfloat, \bfloat) \to \bfloat$ pythagorean theorem solver \\
+    \item $\textbf{math/remainder} : (\bfloat, \bfloat) \to \bfloat$ internal remainder function \\
+\end{itemize}
+
+Looking at the results, these seem pretty good.
+However, in future work we'd like to develop a better way of gaging good results

@@ -1,17 +1,17 @@
 To test both Type2Metric and Axe we use the Go standard library.
-We parsed most of the functions, type aliases, struct definitons, constants, and methods.
+We parsed most of the functions, type aliases, struct definitions, constants, and methods.
 Though some modules such as parts of \texttt{net}, the network module,
-dropped to either assembly or foregin calls.
-These packages were eladed because they contained functions for which we could not gather types.
-We also eladed all testing libraries as they are not used by users of Go.
+dropped to either assembly or foreign calls.
+These packages were elided because they contained functions for which we could not gather types.
+We also elided all testing libraries as they are not used by users of Go.
 We then used the go compiler to extract various fragments of code,
 and from the compiler data we extract the types of all of these fragments.
 We then encoded these types into an Axe specific representation,
-with the intention of extensiblity to other languages.
+with the intention of extensibility to other languages.
 We also gathered any comment block associated with methods, structures, and any of their fields.
 This took relatively little time (less than ten seconds) to collect.
-In total we gathered 130 packages, 
-and each of these packages contained on aveage 94 fragments.
+In total we gathered 120 packages, 
+and each of these packages contained on average 94 fragments.
 For each package we ran a series of random queries with two cutoffs.
 We recorded the results in \ref{dist1plot,dist6plot}.
 We also ran queries over all the packages with several different cutoffs
@@ -21,11 +21,11 @@ and we plotted the result in \ref{allplot}.
 Our performance 
 experiments all revolved around querying data and checking performance gains
 by using a VPTree.
-We queried for objects similiar to members of the tree at different ratios.
+We queried for objects similar to members of the tree at different ratios.
 After indexing, we followed the following testing procedure
 \begin{itemize}
     \item 
-    For each packacge we randomly chose 10 fragments in those packages 
+    For each package we randomly chose 10 fragments in those packages 
     using clock time to provide randomness.
     \item 
     We then iterated through various cutoffs, for individual packages we 

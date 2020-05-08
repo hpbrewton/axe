@@ -1,0 +1,92 @@
+[4350 4343 4319 4352 4351 4355 4357 4359 4335 4413]
+&{Max returns the larger of x or y.
+
+Special cases are:
+	Max(x, +Inf) = Max(+Inf, x) = +Inf
+	Max(x, NaN) = Max(NaN, x) = NaN
+	Max(+0, ±0) = Max(±0, +0) = +0
+	Max(-0, -0) = -0
+ 0xc00379a6e0 math/Max [float64 float64] -> [float64] 0 0}
+&{Ldexp is the inverse of Frexp.
+It returns frac × 2**exp.
+
+Special cases are:
+	Ldexp(±0, exp) = ±0
+	Ldexp(±Inf, exp) = ±Inf
+	Ldexp(NaN, exp) = NaN
+ 0xc00379a6e0 math/Ldexp [float64 int] -> [float64] 0 0}
+&{Dim returns the maximum of x-y or 0.
+
+Special cases are:
+	Dim(+Inf, +Inf) = NaN
+	Dim(-Inf, -Inf) = NaN
+	Dim(x, NaN) = Dim(NaN, x) = NaN
+ 0xc00379a6e0 math/Dim [float64 float64] -> [float64] 0 0}
+&{Mod returns the floating-point remainder of x/y.
+The magnitude of the result is less than y and its
+sign agrees with that of x.
+
+Special cases are:
+	Mod(±Inf, y) = NaN
+	Mod(NaN, y) = NaN
+	Mod(x, 0) = NaN
+	Mod(x, ±Inf) = x
+	Mod(x, NaN) = NaN
+ 0xc00379a6e0 math/Mod [float64 float64] -> [float64] 0 0}
+&{Min returns the smaller of x or y.
+
+Special cases are:
+	Min(x, -Inf) = Min(-Inf, x) = -Inf
+	Min(x, NaN) = Min(NaN, x) = NaN
+	Min(-0, ±0) = Min(±0, -0) = -0
+ 0xc00379a6e0 math/Min [float64 float64] -> [float64] 0 0}
+&{Nextafter returns the next representable float64 value after x towards y.
+
+Special cases are:
+	Nextafter(x, x)   = x
+	Nextafter(NaN, y) = NaN
+	Nextafter(x, NaN) = NaN
+ 0xc00379a6e0 math/Nextafter [float64 float64] -> [float64] 0 0}
+&{Pow returns x**y, the base-x exponential of y.
+
+Special cases are (in order):
+	Pow(x, ±0) = 1 for any x
+	Pow(1, y) = 1 for any y
+	Pow(x, 1) = x for any x
+	Pow(NaN, y) = NaN
+	Pow(x, NaN) = NaN
+	Pow(±0, y) = ±Inf for y an odd integer < 0
+	Pow(±0, -Inf) = +Inf
+	Pow(±0, +Inf) = +0
+	Pow(±0, y) = +Inf for finite y < 0 and not an odd integer
+	Pow(±0, y) = ±0 for y an odd integer > 0
+	Pow(±0, y) = +0 for finite y > 0 and not an odd integer
+	Pow(-1, ±Inf) = 1
+	Pow(x, +Inf) = +Inf for |x| > 1
+	Pow(x, -Inf) = +0 for |x| > 1
+	Pow(x, +Inf) = +0 for |x| < 1
+	Pow(x, -Inf) = +Inf for |x| < 1
+	Pow(+Inf, y) = +Inf for y > 0
+	Pow(+Inf, y) = +0 for y < 0
+	Pow(-Inf, y) = Pow(-0, -y)
+	Pow(x, y) = NaN for finite x < 0 and finite non-integer y
+ 0xc00379a6e0 math/Pow [float64 float64] -> [float64] 0 0}
+&{Remainder returns the IEEE 754 floating-point remainder of x/y.
+
+Special cases are:
+	Remainder(±Inf, y) = NaN
+	Remainder(NaN, y) = NaN
+	Remainder(x, 0) = NaN
+	Remainder(x, ±Inf) = x
+	Remainder(x, NaN) = NaN
+ 0xc00379a6e0 math/Remainder [float64 float64] -> [float64] 0 0}
+&{Hypot returns Sqrt(p*p + q*q), taking care to avoid
+unnecessary overflow and underflow.
+
+Special cases are:
+	Hypot(±Inf, q) = +Inf
+	Hypot(p, ±Inf) = +Inf
+	Hypot(NaN, q) = NaN
+	Hypot(p, NaN) = NaN
+ 0xc00379a6e0 math/Hypot [float64 float64] -> [float64] 0 0}
+&{ 0xc00379a6e0 math/remainder [float64 float64] -> [float64] 0 0}

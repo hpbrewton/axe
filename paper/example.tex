@@ -1,5 +1,5 @@
 Suppose we want to measure how similar two pieces of code are.
-Suppose we limit ourselves to the following language, with an obvious interpreation.
+Suppose we limit ourselves to the following language, with an obvious interpretation.
 
 \begin{align*}
 \text{exp} \to& \text{exp}\quad \text{biop} \quad \text{exp} | \text{singop} \quad \text{exp} | \text{variable} \\
@@ -10,24 +10,23 @@ Suppose we limit ourselves to the following language, with an obvious interpreat
 There are many ways to do that we might do this,
 we might try to just use a simple edit distance
 or we might might try to train from a corpus of expressions.
-Edit distance requires that we treat our expressions as just linear strings of chracters.
-The second option requires us to measure dependent on occurance which is never exactly what we want to measure by.
+Edit distance requires that we treat our expressions as just linear strings of characters.
+The second option requires us to measure dependent on occurrence which is never exactly what we want to measure by.
 
 One place we can start is with the two sets of terminal objects: biop and singop.
 Within each class we can use a discrete metric to measure similarity.
-That is if the two objects are different we simply say they are some fixed $\kappa$ apart.
+That is, if the two objects are different, we simply say they are some fixed $\kappa$ apart.
 This seems as good as anything, though we might want to say that $\cos$ and $\sin$ are somewhat more related, so we give them a $\frac{1}{2}\kappa$ distance.
-This is somewhat arbitrarym but seens fine.
+This is somewhat arbitrary, and setting constants is an art, but this does provide a good start.
 
 We could do a similar approach with variables, but we don't want to say that $counterVariable$ and $countrVariable$ are further apart than any two other words,
 and we do not want to give a specific distance for every two words, so instead we can use some edit distance that measures how close the words themselves are.
 
-For the two productions that use exp recursively, we can use the above approaches inductively to find distance between two members of the language that at the top are one of these expressions.
-Here's how: first find the distance between left node of the two members, then the right, then the operator used, and then we can simply use a linear combination of these distances to fidn our result.
+For the two productions that use ``exp'' recursively, we can use the above approaches inductively to find distance between two members of the language that at the top are one of these expressions.
+Here's how: first find the distance between left node of the two members, then the right, then the operator used, and then we can simply use a linear combination of these distances to find our result.
 In this way we can find the distance between any two members of the language.
-There is one final question abot what we ought to do if the two words are different at the top level.
-For now we will say that we apply a fixed cost ast this often the best approach,
-but what we will discuss other options in future sections.
+There is one final question about what we ought to do if the two words are different at the top level.
+For now we will say that we apply a fixed cost.
 
-This metric was create through a set of intutions but is not yet something formal.
-In the next section we will discuss how to formalize these intutions and others into an algorithm for creating metrics from types.
+This metric was created through a set of intuitions but is not yet something formal.
+In the next section we will discuss how to formalize these intuitions and others into an algorithm for creating metrics from types.

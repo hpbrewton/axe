@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  3 MAY 2020 09:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  8 MAY 2020 14:19
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -153,18 +153,18 @@ Package: cite 2015/02/27  v 5.5
  (/Users/harrison/axe/paper/main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -255,60 +255,115 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 5.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )) (/Users/harrison/axe/paper/metricOverview.tex) (/Users/harrison/axe/paper/codesearch.tex [1
 
-{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (/Users/harrison/axe/paper/implementationIntro.tex) (/Users/harrison/axe/paper/contributions.tex) (/Users/harrison/axe/paper/examplesIntro.tex) (/Users/harrison/axe/paper/example.tex [2]
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (/Users/harrison/axe/paper/implementationIntro.tex) (/Users/harrison/axe/paper/contributions.tex
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 4.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 4.
+) (/Users/harrison/axe/paper/examplesIntro.tex) (/Users/harrison/axe/paper/example.tex [2]
 Overfull \hbox (17.82748pt too wide) in paragraph at lines 22--24
 []\OT1/cmr/m/n/12 We could do a sim-i-lar ap-proach with vari-ables, but we don't want to say that $\OML/cmm/m/it/12 counterVariable$
  []
 
-) (/Users/harrison/axe/paper/typeToMetricProblem.tex) (/Users/harrison/axe/paper/levenshtein.tex [3]) [4] (/Users/harrison/axe/paper/linearCombo.tex) (/Users/harrison/axe/paper/alteration.tex [5]) (/Users/harrison/axe/paper/fromTypesToMetrics.tex) (/Users/harrison/axe/paper/metricTrees.tex [6] [7] [8]
+) (/Users/harrison/axe/paper/typeToMetricProblem.tex) (/Users/harrison/axe/paper/levenshtein.tex [3]) [4] (/Users/harrison/axe/paper/linearCombo.tex) (/Users/harrison/axe/paper/alteration.tex [5]) (/Users/harrison/axe/paper/fromTypesToMetrics.tex) (/Users/harrison/axe/paper/axe.tex) [6] [7] (/Users/harrison/axe/paper/metricTrees.tex [8]
 Overfull \hbox (31.31102pt too wide) detected at line 66
 []
  []
 
-) (/Users/harrison/axe/paper/implementation.tex) (/Users/harrison/axe/paper/experimentalSetup.tex
+) (/Users/harrison/axe/paper/implementation.tex
+
+LaTeX Warning: Citation `github' on page 9 undefined on input line 3.
+
+) (/Users/harrison/axe/paper/experimentalSetup.tex
 
 LaTeX Warning: Reference `dist1plot,dist6plot' on page 9 undefined on input line 16.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 28.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 28.
- [9]) (/Users/harrison/axe/paper/evaluate.tex
-<example1.png, id=47, 963.6pt x 1059.96pt>
+[9]) (/Users/harrison/axe/paper/results.tex
+Underfull \hbox (badness 10000) in paragraph at lines 16--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 17--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--19
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 19--20
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--21
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 21--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 23--24
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--25
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 25--26
+
+ []
+
+) (/Users/harrison/axe/paper/evaluate.tex [11]
+<example0.png, id=53, 963.6pt x 1059.96pt>
+File: example0.png Graphic file (type png)
+<use example0.png>
+Package pdftex.def Info: example0.png  used on input line 34.
+(pdftex.def)             Requested size: 469.75502pt x 516.73247pt.
+<example1.png, id=54, 963.6pt x 1059.96pt>
 File: example1.png Graphic file (type png)
 <use example1.png>
-Package pdftex.def Info: example1.png  used on input line 35.
+Package pdftex.def Info: example1.png  used on input line 44.
 (pdftex.def)             Requested size: 469.75502pt x 516.73247pt.
-<example6.png, id=48, 963.6pt x 1059.96pt>
-File: example6.png Graphic file (type png)
-<use example6.png>
-Package pdftex.def Info: example6.png  used on input line 45.
-(pdftex.def)             Requested size: 469.75502pt x 516.73247pt.
-<alldat.png, id=49, 1071.00125pt x 1071.00125pt>
+<alldat.png, id=55, 1071.00125pt x 1071.00125pt>
 File: alldat.png Graphic file (type png)
 <use alldat.png>
-Package pdftex.def Info: alldat.png  used on input line 55.
+Package pdftex.def Info: alldat.png  used on input line 54.
 (pdftex.def)             Requested size: 234.8775pt x 234.86926pt.
-) (/Users/harrison/axe/paper/hoogle.tex) [10] [11 </Users/harrison/axe/paper/example1.png (PNG copy)>] [12 </Users/harrison/axe/paper/example6.png (PNG copy)>] (/Users/harrison/axe/paper/googleCodeSearch.tex) (/Users/harrison/axe/paper/2vecs.tex) [13 </Users/harrison/axe/paper/alldat.png (PNG copy)>] (/Users/harrison/axe/paper/bestApproximation.tex) (/Users/harrison/axe/paper/conclusion.tex) (/Users/harrison/axe/paper/main.bbl [14]) [15] (/Users/harrison/axe/paper/main.aux)
+) (/Users/harrison/axe/paper/hoogle.tex) (/Users/harrison/axe/paper/googleCodeSearch.tex) (/Users/harrison/axe/paper/2vecs.tex) [12] [13 </Users/harrison/axe/paper/example0.png (PNG copy)>] [14 </Users/harrison/axe/paper/example1.png (PNG copy)>] (/Users/harrison/axe/paper/bestApproximation.tex) (/Users/harrison/axe/paper/conclusion.tex) (/Users/harrison/axe/paper/main.bbl [15 </Users/harrison/axe/paper/alldat.png (PNG copy)>]) [16] (/Users/harrison/axe/paper/main.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 3322 strings out of 492616
- 46433 string characters out of 6129482
- 120230 words of memory out of 5000000
- 7116 multiletter control sequences out of 15000+600000
- 14262 words of font info for 55 fonts, out of 8000000 for 9000
+ 3334 strings out of 492616
+ 46635 string characters out of 6129482
+ 122238 words of memory out of 5000000
+ 7120 multiletter control sequences out of 15000+600000
+ 14883 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,21n,32p,440b,293s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,21n,32p,442b,293s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on /Users/harrison/axe/paper/main.pdf (15 pages, 448224 bytes).
+Output written on /Users/harrison/axe/paper/main.pdf (16 pages, 449777 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 83 compressed objects within 1 object stream
+ 123 PDF objects out of 1000 (max. 8388607)
+ 85 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

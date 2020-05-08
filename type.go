@@ -65,7 +65,7 @@ func (array *Array) String() string {
 }
 
 type Function struct {
-	Object Type `type2vec:"0.0001"`// hey bud, it's worth noting that this can be nil
+	Object Type 
 	Arguments []Type
 	Output []Type
 }

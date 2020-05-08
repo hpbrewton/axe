@@ -80,7 +80,6 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
-INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT /Users/harrison/axe/paper/abstract.tex
 INPUT /Users/harrison/axe/paper/abstract.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
@@ -104,6 +103,7 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
@@ -118,6 +118,8 @@ INPUT /Users/harrison/axe/paper/implementationIntro.tex
 INPUT /Users/harrison/axe/paper/implementationIntro.tex
 INPUT /Users/harrison/axe/paper/contributions.tex
 INPUT /Users/harrison/axe/paper/contributions.tex
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /Users/harrison/axe/paper/examplesIntro.tex
 INPUT /Users/harrison/axe/paper/examplesIntro.tex
 INPUT /Users/harrison/axe/paper/example.tex
@@ -137,6 +139,8 @@ INPUT /Users/harrison/axe/paper/fromTypesToMetrics.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt12.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT /Users/harrison/axe/paper/axe.tex
+INPUT /Users/harrison/axe/paper/axe.tex
 INPUT /Users/harrison/axe/paper/metricTrees.tex
 INPUT /Users/harrison/axe/paper/metricTrees.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
@@ -153,16 +157,18 @@ INPUT /Users/harrison/axe/paper/implementation.tex
 INPUT /Users/harrison/axe/paper/implementation.tex
 INPUT /Users/harrison/axe/paper/experimentalSetup.tex
 INPUT /Users/harrison/axe/paper/experimentalSetup.tex
-INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
-INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
+INPUT /Users/harrison/axe/paper/results.tex
+INPUT /Users/harrison/axe/paper/results.tex
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT /Users/harrison/axe/paper/evaluate.tex
 INPUT /Users/harrison/axe/paper/evaluate.tex
+INPUT /Users/harrison/axe/paper/example0.png
+INPUT /Users/harrison/axe/paper/example0.png
+INPUT /Users/harrison/axe/paper/example0.png
 INPUT /Users/harrison/axe/paper/example1.png
 INPUT /Users/harrison/axe/paper/example1.png
 INPUT /Users/harrison/axe/paper/example1.png
-INPUT /Users/harrison/axe/paper/example6.png
-INPUT /Users/harrison/axe/paper/example6.png
-INPUT /Users/harrison/axe/paper/example6.png
 INPUT /Users/harrison/axe/paper/alldat.png
 INPUT /Users/harrison/axe/paper/alldat.png
 INPUT /Users/harrison/axe/paper/alldat.png

@@ -51,6 +51,14 @@ var colors = []color.Color{
 
 var intervals = []float64{0, 1, 2, 3, 5, 10, 100, 1000}
 
+func min(a, b int) int {
+	if a < b {
+		return a 
+	} else {
+		return b
+	}
+}
+
 func toFloat64Slice(l []int64) []float64 {
 	ret := make([]float64, len(l))
 	for i, v := range l {
@@ -108,7 +116,8 @@ func main() {
 	for row := 0; row < height; row++ {
 		plots[row] = make([]*plot.Plot, width)
 		for col := 0; col < width; col++ {
-			values := plotter.Values(bars[keyBar][row*across:(row*across+across)])
+			ubound := min(row*across+across, len(bars[keyBar]))
+			values := plotter.Values(bars[keyBar][row*across:ubound])
 			redValues := make(plotter.Values, len(values))
 			for i, value := range values {
 				if value > 1 {
@@ -132,7 +141,7 @@ func main() {
 			p.Add(bar, redbar)
 			p.Y.Max = 2
 			p.Y.Min = 0
-			p.NominalX(groups[row*across:(row*across+across)]...)
+			p.NominalX(groups[row*across:ubound]...)
 			plots[row][col] = p
 		}
 	}

@@ -1,10 +1,11 @@
 We have implemented our Type2Metric and Axe in Go.
 Type2Metric allows users to use normal structures defined in Go to define their data objects, 
 built in Go annotations to provide numeric adjustments in the conversion, 
-and a single function call to automatically create metrics that operate over all non-function types in Golang.
+and a single function call to automatically create metrics that operate over all non-function types in Go.
 We evaluate this converter by its ability to be used in a real world search situation.
 We use Type2Metric to automatically create a metric between Go type signatures themselves,
 these signatures are parsed out of Go code using Go build tools.
 This metric is then used to guide Axe to organize fragments of Go code.
-We evaluate Axe by creating indexes over all of the packages in the Go standard library,
-and performing random queries on this data.w
+We evaluate Axe by creating indexes over most of the packages in the Go standard library,
+and performing random queries on this data.
+We check for both performance and good answers.
