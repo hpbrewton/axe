@@ -23,6 +23,10 @@ Neil Mitchell.
 Jeremy Kun.
 \newblock Metrics on words, May 2014.
 
+\bibitem{githubRepo}
+Harrison Brewton.
+\newblock Project repo, 2020.
+
 \bibitem{ReusablePolyType}
 Colin Runciman and Ian Toyn.
 \newblock Retrieving re-usable software components by polymorphic type.

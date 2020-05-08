@@ -23,7 +23,7 @@ radius &: \Rnn \\
 \}
 \end{align*}
 
-In this definition we note a $\text{VP-Tree } X$ can be $\null$
+In this definition we note a $\text{VP-Tree } X$ can be $\nil$
 
 To aid in understanding it is worth noting the similarity between a VP-Tree and normal binary search tree.
 In a normal binary search tree,
@@ -37,7 +37,7 @@ We formalize this with the below method:
 
 \begin{align*}
 query(v : VP-Tree X, target : X, cutoff : \Rnn) \to 2^X = \\ \begin{cases}
-    \emptyset & v = \null \\ 
+    \emptyset & v = \nil \\ 
     \bigcup \left.\begin{cases}
         query(v.interior) & d_X(v.self, target) \le v.radius + cutoff \\ 
         query(v.exterior) & d_X(v.self, target) > v.radius - cutoff \\ 

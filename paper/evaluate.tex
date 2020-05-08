@@ -10,8 +10,8 @@ So, while certainly longer than indexing by trigrams, it seems that times for in
 We will give an overview of the performance of the querying of types in the below.
 A key evaluation is whether using a VP-Tree for code search is a true performance gain over a linear method.
 To test this we compared the time for a linear query (cutoff at max value $1000$) under various other cutoffs ($1$ and $100$).
-We plotted the speed of querying with a $1$ for a cutoff over linear speed in Figure \ref{dist1plot},
-and similarly with a speed of $6$ in Figure \ref{dist6plot}.
+We plotted the speed of querying with a $0$ for a cutoff over linear speed in Figure \ref{dist0plot},
+and similarly with a speed of $1$ in Figure \ref{dist1plot}.
 In these plots we can see that when querying with a cutoffs of $0$, 117 of the 125 benchmarks saw a speed up,
 and just a little worse for cutoffs of $1$ (115 of the 125).
 Additionally, for a little over two thirds of the benchmarks we at least halved the time of a linear search.
@@ -32,27 +32,27 @@ yes they are effective at reducing time complexity of problems.
 
 \begin{figure}
     \includegraphics[width=\textwidth]{example0.png}
-    \label{dist6plot}
     \centering
     \caption{Each Go module was indexed and then randomly queried.
     Speed up over linear search for a search distance of $0$ is plotted for each Go module.
     Green indicates search was faster, red otherwise.
     Names are the first twelve characters of module name.
     The rest are elided for readability.}
+    \label{dist0plot}
 \end{figure}
 \begin{figure}
     \includegraphics[width=\textwidth]{example1.png}
-    \label{dist1plot}
     \centering
     \caption{Each Go module was indexed and then randomly queried.
     Speed up over linear search for a search distance of $1$ is plotted for each Go module.
     Green indicates search was faster, red otherwise.
     Names are the first twelve characters of module name.
     The rest are elided for readability.}
+    \label{dist1plot}
 \end{figure}
 \begin{figure}
     \includegraphics[width=0.5\textwidth]{alldat.png}
-    \label{allplot}
     \centering 
     \caption{Query times indexing on all data}
+    \label{allplot}
 \end{figure}
